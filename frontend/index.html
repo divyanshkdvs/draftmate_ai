@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DraftMate &bull; Product Innovation for Legal Minds</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Fonts: Newsreader (Matching Harvey's TWK Ghost serif) & Inter (Matching Harvey's ABC Diatype sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            harvey: {
+              bg: '#FFFFFF',
+              surface: '#FBFBFB',
+              card: '#F4F4F5',
+              dark: '#111111',
+              darkCard: '#18181B',
+              darkBorder: '#27272A',
+              border: '#E4E4E7',
+              borderLight: '#F1F1F4',
+              text: '#09090B',
+              muted: '#71717A',
+              subtle: '#A1A1AA',
+              tagBg: '#09090B',
+              tagText: '#FFFFFF',
+              green: '#15803D',
+              greenBg: '#F0FDF4',
+              greenBorder: '#BBF7D0',
+              amber: '#B45309',
+              amberBg: '#FFFBEB',
+              amberBorder: '#FDE68A',
+              red: '#B91C1C',
+              redBg: '#FEF2F2',
+              redBorder: '#FECACA'
+            }
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'Georgia', 'serif'],
+            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      background-color: #FFFFFF;
+      color: #09090B;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.011em;
+    }
+
+    .harvey-serif {
+      font-family: 'Newsreader', Georgia, serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFFFFF;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E4E4E7;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #A1A1AA;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-zinc-950 antialiased selection:bg-zinc-900 selection:text-white">
+
+  <!-- ========================================================================= -->
+  <!-- 1. NAVIGATION BAR (Harvey Minimalist Header) -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-200">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+      
+      <!-- Logo Wordmark -->
+      <a href="#" class="flex items-center space-x-2.5">
+        <span class="w-6 h-6 rounded-md bg-black text-white flex items-center justify-center font-serif text-sm font-bold">
+          D
+        </span>
+        <span class="font-serif text-2xl font-semibold tracking-tight text-black">
+          DraftMate
+        </span>
+      </a>
+
+      <!-- Clean Minimal Nav Links -->
+      <nav class="hidden md:flex items-center space-x-9 text-sm font-medium text-zinc-600">
+        <a href="#agents" class="hover:text-black transition-colors">Agents</a>
+        <a href="#studio" class="hover:text-black transition-colors">Studio</a>
+        <a href="#solutions" class="hover:text-black transition-colors">Solutions</a>
+        <a href="#verification" class="hover:text-black transition-colors">Authority</a>
+        <button onclick="toggleHigurumaChamber()" class="hover:text-black transition-colors flex items-center space-x-1.5 text-zinc-900 font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Higuruma Counsel</span>
+        </button>
+      </nav>
+
+      <!-- Right Action: Clean Black Rounded Button -->
+      <div class="flex items-center space-x-3">
+        <a 
+          href="#studio" 
+          class="inline-flex items-center justify-center bg-black hover:bg-zinc-800 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-all shadow-xs"
+        >
+          Request a Demo
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ========================================================================= -->
+  <!-- 2. HERO SECTION (Matching Screenshot 1: "Introducing Harvey II") -->
+  <!-- ========================================================================= -->
+  <section class="max-w-5xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-16 text-center space-y-6">
+    
+    <!-- Top Pill Badge (Exact replica of Screenshot 1) -->
+    <div class="inline-flex items-center justify-center">
+      <span class="bg-black text-white text-[11px] font-semibold uppercase tracking-wider px-3.5 py-1 rounded-md">
+        NEW
+      </span>
+    </div>
+
+    <!-- Main Title in Newsreader Serif (Matching "Introducing Harvey II") -->
+    <h1 class="harvey-serif text-6xl sm:text-7xl md:text-8xl font-normal text-black tracking-tight leading-none">
+      Introducing DraftMate II
+    </h1>
+
+    <!-- Refined Subtitle in Inter (Matching Screenshot 1) -->
+    <p class="text-lg sm:text-xl md:text-2xl text-zinc-600 font-normal max-w-3xl mx-auto leading-relaxed">
+      The most powerful legal drafting platform yet. Smarter workflows can now deliver more complex work in exactly the way you like it.
+    </p>
+
+    <!-- Center Call-to-Action (Matching Screenshot 1) -->
+    <div class="pt-4 flex items-center justify-center space-x-4">
+      <a 
+        href="#studio" 
+        class="inline-flex items-center justify-center bg-black hover:bg-zinc-800 text-white text-base font-medium px-8 py-3.5 rounded-lg transition-all shadow-sm"
+      >
+        Request a Demo
+      </a>
+      <a 
+        href="#studio" 
+        class="inline-flex items-center justify-center bg-zinc-100 hover:bg-zinc-200 text-black text-base font-medium px-7 py-3.5 rounded-lg transition-all"
+      >
+        Start Drafting
+      </a>
+    </div>
+
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 3. PRODUCT INNOVATION & AGENTS (Matching Screenshot 2) -->
+  <!-- ========================================================================= -->
+  <section id="agents" class="max-w-7xl mx-auto px-6 md:px-12 py-16 border-t border-zinc-200">
+    
+    <h2 class="text-3xl md:text-4xl font-medium text-black mb-12 tracking-tight">
+      Product Innovation for the Best Legal Minds
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      
+      <!-- Left Column: Tabbed Features with 1px Hairlines (Matching Screenshot 2) -->
+      <div class="lg:col-span-4 space-y-1 divide-y divide-zinc-200">
+        
+        <!-- Active Tab: Agents -->
+        <div class="py-5 first:pt-0">
+          <div class="text-xl font-medium text-black">Agents</div>
+          <p class="text-sm text-zinc-600 mt-2 leading-relaxed">
+            Orchestrate complex legal work, with tasks automatically routed to the right agent.
+          </p>
+          <a href="#studio" class="inline-block mt-3 text-sm font-medium text-black hover:underline">
+            Learn More &rarr;
+          </a>
+        </div>
+
+        <!-- Inactive Tab: Spaces -->
+        <div class="py-4">
+          <button onclick="setWorkflow('@ContractDrafting', 'Spaces')" class="text-lg font-medium text-zinc-500 hover:text-black transition text-left w-full">
+            Spaces
+          </button>
+        </div>
+
+        <!-- Inactive Tab: Vault -->
+        <div class="py-4">
+          <button onclick="setWorkflow('@CaseLawResearch', 'Vault')" class="text-lg font-medium text-zinc-500 hover:text-black transition text-left w-full">
+            Vault
+          </button>
+        </div>
+
+        <!-- Inactive Tab: Contract Intelligence -->
+        <div class="py-4">
+          <button onclick="setWorkflow('@ContractReview', 'Contract Intelligence')" class="text-lg font-medium text-zinc-500 hover:text-black transition text-left w-full">
+            Contract Intelligence
+          </button>
+        </div>
+
+        <!-- Inactive Tab: Command Center -->
+        <div class="py-4">
+          <button onclick="toggleHigurumaChamber()" class="text-lg font-medium text-zinc-500 hover:text-black transition text-left w-full">
+            Command Center
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Interactive Progress & File Container (Matching Screenshot 2) -->
+      <div class="lg:col-span-8">
+        <div class="bg-zinc-50 border border-zinc-200 rounded-2xl p-6 md:p-8 shadow-xs space-y-6">
+          
+          <div class="flex items-center justify-between border-b border-zinc-200 pb-4 text-xs font-medium text-zinc-500">
+            <div class="flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-zinc-900 font-semibold">Active Agent Task &bull; Matter #4092</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <span class="hover:text-black cursor-pointer">Share</span>
+              <span>&bull;</span>
+              <span>Progress &darr;</span>
+            </div>
+          </div>
+
+          <!-- Step Progress (Matching Screenshot 2) -->
+          <div class="space-y-3.5 text-xs">
+            
+            <div class="flex items-start space-x-3">
+              <div class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="check" class="w-3 h-3"></i>
+              </div>
+              <span class="text-zinc-700">Extract agreed positions from <strong>Deal_Terms_Tracker.xlsx</strong></span>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <div class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="check" class="w-3 h-3"></i>
+              </div>
+              <span class="text-zinc-700">Parse the counterparty redline and locate each operative change</span>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <div class="w-4 h-4 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
+                <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+              </div>
+              <span class="text-zinc-900 font-semibold">Compare each redline change against the agreed position</span>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <div class="w-4 h-4 rounded-full border border-zinc-300 flex items-center justify-center shrink-0 mt-0.5"></div>
+              <span class="text-zinc-500">Flag discrepancies and build the reconciliation table</span>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <div class="w-4 h-4 rounded-full border border-zinc-300 flex items-center justify-center shrink-0 mt-0.5"></div>
+              <span class="text-zinc-500">Generate 3 deliverables &mdash; NorthRiver compliance memo, risk matrix, and citation index</span>
+            </div>
+
+          </div>
+
+          <!-- Outputs File List (Matching Screenshot 2) -->
+          <div class="pt-4 border-t border-zinc-200">
+            <span class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Outputs</span>
+            <div class="space-y-1.5 text-xs text-zinc-800 font-mono">
+              <div class="flex items-center space-x-2">
+                <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-600"></i>
+                <span>NorthRiver_EU_AI_Act_Compliance_Memo.docx</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>AI_Act_Risk_Classification_Matrix.xlsx</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <i data-lucide="file-check" class="w-3.5 h-3.5 text-purple-600"></i>
+                <span>EUR_Lex_Source_Citation_Index.docx</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 4. FOR LAW FIRMS & FOR IN-HOUSE (Matching Screenshot 3) -->
+  <!-- ========================================================================= -->
+  <section id="solutions" class="max-w-7xl mx-auto px-6 md:px-12 py-16 border-t border-zinc-200">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Card 1: For Law Firms (Matching Screenshot 3 Left) -->
+      <div class="bg-[#18181B] text-white rounded-2xl p-8 md:p-10 flex flex-col justify-between shadow-xl">
+        <div class="space-y-4">
+          <h3 class="harvey-serif text-4xl sm:text-5xl font-normal text-white">
+            For Law Firms
+          </h3>
+          <p class="text-sm text-zinc-300 leading-relaxed max-w-md font-light">
+            Run every client matter securely on one platform, with your lawyers and agents working from the same context.
+          </p>
+          <div class="pt-2">
+            <a 
+              href="#studio" 
+              class="inline-block border border-zinc-600 hover:border-white text-white text-xs font-medium px-4 py-2 rounded-lg transition"
+            >
+              Explore DraftMate for Law Firms
+            </a>
+          </div>
+        </div>
+
+        <!-- UI Specimen Snippet (Matching Screenshot 3 Left) -->
+        <div class="mt-8 bg-white text-zinc-900 rounded-xl p-5 shadow-lg space-y-3 text-xs">
+          <div class="flex items-center space-x-2 text-zinc-500 text-[11px] border-b border-zinc-100 pb-2">
+            <span class="w-4 h-4 rounded-full bg-black text-white text-[9px] flex items-center justify-center font-bold">P</span>
+            <span class="font-semibold text-black">Project Titan &mdash; Acme Co</span>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            <span class="bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded text-[11px] font-medium border border-zinc-200">
+              📄 Acme Co Side Letters
+            </span>
+            <span class="bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded text-[11px] font-medium border border-zinc-200">
+              📄 Acme Co Term Sheet
+            </span>
+          </div>
+
+          <p class="text-zinc-700 bg-zinc-50 p-2.5 rounded border border-zinc-200/60 leading-normal">
+            "Please use <strong>Compare Fund Term Sheet against Side Letter Terms</strong> for the documents attached."
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 2: For In-House (Matching Screenshot 3 Right) -->
+      <div class="bg-[#18181B] text-white rounded-2xl p-8 md:p-10 flex flex-col justify-between shadow-xl">
+        <div class="space-y-4">
+          <h3 class="harvey-serif text-4xl sm:text-5xl font-normal text-white">
+            For In-House
+          </h3>
+          <p class="text-sm text-zinc-300 leading-relaxed max-w-md font-light">
+            Manage your contracts intelligently, optimize external counsel relationships and hand the repetitive work to agents.
+          </p>
+          <div class="pt-2">
+            <a 
+              href="#studio" 
+              class="inline-block border border-zinc-600 hover:border-white text-white text-xs font-medium px-4 py-2 rounded-lg transition"
+            >
+              Explore DraftMate for In-House Teams
+            </a>
+          </div>
+        </div>
+
+        <!-- Table Specimen Snippet (Matching Screenshot 3 Right) -->
+        <div class="mt-8 bg-white text-zinc-900 rounded-xl p-5 shadow-lg space-y-3 text-xs">
+          <div class="flex items-center justify-between border-b border-zinc-100 pb-2">
+            <span class="font-semibold text-black">Contract Intelligence</span>
+            <span class="text-[11px] text-zinc-500">10 contracts auto-reviewed</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-center">
+            <div class="bg-zinc-50 p-2 rounded border border-zinc-100">
+              <div class="text-xl font-serif text-black">26</div>
+              <div class="text-[10px] text-zinc-500">Ready to review</div>
+            </div>
+            <div class="bg-zinc-50 p-2 rounded border border-zinc-100">
+              <div class="text-xl font-serif text-black">9</div>
+              <div class="text-[10px] text-zinc-500">Assigned to you</div>
+            </div>
+          </div>
+
+          <div class="space-y-1 text-[11px]">
+            <div class="flex items-center justify-between text-zinc-700 py-0.5">
+              <span>Starlight Holdings MSA.docx</span>
+              <span class="bg-amber-100 text-amber-800 px-1.5 rounded text-[10px] font-semibold">&bull; In progress</span>
+            </div>
+            <div class="flex items-center justify-between text-zinc-700 py-0.5">
+              <span>AstroTech Partnership Agreement.docx</span>
+              <span class="bg-emerald-100 text-emerald-800 px-1.5 rounded text-[10px] font-semibold">&check; Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 5. CENTRAL DRAFTING DOCK & STUDIO (Aligned controls as requested) -->
+  <!-- ========================================================================= -->
+  <section id="studio" class="max-w-7xl mx-auto px-6 md:px-12 py-16 border-t border-zinc-200">
+    
+    <div class="max-w-3xl mb-8 space-y-2">
+      <div class="text-xs uppercase font-mono tracking-wider text-zinc-500 font-semibold">
+        Drafting Studio &bull; Workspace
+      </div>
+      <h2 class="harvey-serif text-4xl sm:text-5xl font-normal text-black">
+        Synthesize, Review & Verify
+      </h2>
+      <p class="text-sm text-zinc-600">
+        Input instructions, attach reference files via Microsoft MarkItDown, or invoke specialized workflows.
+      </p>
+    </div>
+
+    <!-- 5 Workflow Buttons with Rounded Corners -->
+    <div class="flex flex-wrap gap-2 mb-4 text-xs">
+      <button onclick="setWorkflow('@ContractDrafting', 'Contract Drafting')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
+        @ContractDrafting
+      </button>
+      <button onclick="setWorkflow('@LegalNotice', 'Legal Notice')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
+        @LegalNotice
+      </button>
+      <button onclick="setWorkflow('@PetitionDrafting', 'Court Petition')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
+        @PetitionDrafting
+      </button>
+      <button onclick="setWorkflow('@ContractReview', 'Review & Redline')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
+        @ContractReview
+      </button>
+      <button onclick="setWorkflow('@CaseLawResearch', 'Legal Research')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
+        @CaseLawResearch
+      </button>
+    </div>
+
+    <!-- The Aligned Input Dock (File Upload, Voice, Text, Generate on same bar) -->
+    <div class="bg-white border border-zinc-300 rounded-2xl shadow-md p-4 md:p-6 transition-all focus-within:border-black focus-within:ring-1 focus-within:ring-black">
+      
+      <!-- Context Attachment Chips -->
+      <div id="attachedTagsContainer" class="flex flex-wrap gap-2 mb-3"></div>
+
+      <!-- Textarea Console -->
+      <textarea 
+        id="promptInput" 
+        rows="3" 
+        placeholder="Ask anything, draft an agreement, or type @ to invoke a specific legal skill (e.g. 'Draft a Mutual NDA under Indian law' or '@ContractReview on attached agreement')..."
+        class="w-full bg-transparent resize-none border-0 text-zinc-900 text-sm sm:text-base placeholder:text-zinc-400 leading-relaxed outline-none"
+      ></textarea>
+
+      <!-- Horizontally Aligned Controls Bar (Attach File + Voice Input + Generate Button) -->
+      <div class="pt-4 mt-2 border-t border-zinc-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+        
+        <!-- Left Group: Upload File + Voice Dictation + Style Switch -->
+        <div class="flex items-center space-x-2.5 text-zinc-600">
+          
+          <!-- Upload Button (Microsoft MarkItDown) -->
+          <label class="cursor-pointer inline-flex items-center space-x-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg transition font-medium">
+            <i data-lucide="paperclip" class="w-3.5 h-3.5 text-zinc-600"></i>
+            <span>Attach File</span>
+            <input type="file" id="fileUploadInput" onchange="handleFileUpload(event)" class="hidden" accept=".pdf,.docx,.doc,.txt,.md">
+          </label>
+
+          <!-- Voice Input Button -->
+          <button 
+            onclick="openVoiceModal()" 
+            class="inline-flex items-center space-x-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg transition font-medium"
+            title="Spoken Dictation & Commands"
+          >
+            <i data-lucide="mic" class="w-3.5 h-3.5 text-zinc-600"></i>
+            <span>Voice Input</span>
+          </button>
+
+          <!-- Reference Style Adaptation Switch -->
+          <label class="hidden sm:inline-flex items-center space-x-1.5 cursor-pointer text-zinc-600 hover:text-black">
+            <input type="checkbox" id="learnStyleToggle" class="rounded text-black focus:ring-0">
+            <span class="text-[11px]">Adapt Reference Style</span>
+          </label>
+
+        </div>
+
+        <!-- Right Group: Generate Button Aligned on the exact same row -->
+        <div class="flex items-center space-x-3">
+          <button 
+            id="sendDraftBtn" 
+            onclick="executeDrafting()" 
+            class="inline-flex items-center space-x-2 bg-black hover:bg-zinc-800 text-white text-xs font-medium px-5 py-2.5 rounded-lg transition-all shadow-xs active:scale-95 disabled:opacity-50"
+          >
+            <span>Draft Instrument</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Studio Output Area (Document Viewer | Citations | Redline) -->
+    <div id="studioOutputContainer" class="hidden mt-8 bg-white border border-zinc-200 rounded-2xl shadow-xl overflow-hidden">
+      
+      <!-- Studio Tabs Bar -->
+      <div class="bg-zinc-50 border-b border-zinc-200 px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+        
+        <div class="flex items-center space-x-2">
+          <button onclick="switchStudioTab('draft')" id="tabDraftBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-black border border-zinc-200 shadow-xs">
+            Legal Instrument
+          </button>
+          <button onclick="switchStudioTab('citations')" id="tabCitationsBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:text-black transition">
+            Citation Authority
+            <span id="citationCountBadge" class="ml-1 bg-zinc-200 text-black text-[10px] px-1.5 py-0.2 rounded-full font-mono">0</span>
+          </button>
+          <button onclick="switchStudioTab('redline')" id="tabRedlineBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:text-black transition">
+            Redline Audit
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-3 text-xs">
+          <!-- Headroom Token Telemetry -->
+          <div id="headroomSavingsBadge" class="hidden items-center space-x-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium">
+            <span id="headroomSavingsText">Headroom: 42% saved</span>
+          </div>
+
+          <!-- Export Buttons -->
+          <button onclick="exportMarkdown()" class="border border-zinc-200 bg-white hover:bg-zinc-50 text-black px-2.5 py-1 rounded-md text-[11px]">
+            Markdown (.md)
+          </button>
+          <button onclick="exportDocx()" class="border border-zinc-200 bg-white hover:bg-zinc-50 text-black px-2.5 py-1 rounded-md text-[11px]">
+            Word (.doc)
+          </button>
+          <button onclick="copyDraftText()" class="border border-zinc-200 bg-white hover:bg-zinc-50 text-black px-2.5 py-1 rounded-md text-[11px]">
+            Copy Text
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Studio Tab 1: Formatted Document -->
+      <div id="tabContentDraft" class="p-8 md:p-12 overflow-y-auto max-h-[650px] leading-relaxed text-sm select-text bg-white">
+        <div id="renderedDraftView" class="max-w-3xl mx-auto space-y-4"></div>
+      </div>
+
+      <!-- Studio Tab 2: Citation Verification Desk -->
+      <div id="tabContentCitations" class="hidden p-8 overflow-y-auto max-h-[650px] space-y-4 bg-zinc-50">
+        <div id="citationSummaryHeader" class="p-5 bg-white border border-zinc-200 rounded-xl flex items-center justify-between"></div>
+        <div id="citationCardsList" class="space-y-3"></div>
+      </div>
+
+      <!-- Studio Tab 3: Redline Diff Viewer -->
+      <div id="tabContentRedline" class="hidden p-8 overflow-y-auto max-h-[650px] space-y-4 bg-zinc-50">
+        <div class="flex items-center justify-between text-xs text-zinc-600 pb-2 border-b border-zinc-200">
+          <span>Redline Markup: Red = Deleted text &bull; Green = Proposed covenants</span>
+          <button onclick="applyRedlinesNotice()" class="bg-black text-white px-3 py-1 rounded-md text-xs font-semibold">
+            Incorporate All Redlines
+          </button>
+        </div>
+        <div id="redlineLinesContainer" class="p-4 bg-white border border-zinc-200 rounded-xl font-mono text-xs space-y-1 overflow-x-auto"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 6. MINIMALIST FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="max-w-7xl mx-auto px-6 md:px-12 py-12 text-zinc-500 text-xs border-t border-zinc-200">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-2">
+        <span class="font-serif text-lg font-semibold text-black">DraftMate</span>
+        <span>&bull;</span>
+        <span>Kodekurrent Season 2 Hackathon (RGIPT)</span>
+      </div>
+      <div class="flex space-x-6 text-zinc-600 font-medium">
+        <a href="#agents" class="hover:text-black">Agents</a>
+        <a href="#studio" class="hover:text-black">Studio</a>
+        <a href="/docs" target="_blank" class="hover:text-black">API Docs</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ========================================================================= -->
+  <!-- 7. CONSULT HIGURUMA COMPANION (Harvey Minimalist Style) -->
+  <!-- ========================================================================= -->
+
+  <!-- Floating Dock Summoner (Bottom-Right) -->
+  <div 
+    id="higurumaDockWidget"
+    onclick="toggleHigurumaChamber()" 
+    class="fixed bottom-6 right-6 z-40 bg-black text-white border border-zinc-800 p-3 rounded-xl shadow-2xl cursor-pointer hover:bg-zinc-900 transition-all flex items-center space-x-3 group"
+  >
+    <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-sm">
+      ⚖️
+    </div>
+    <div class="pr-2">
+      <div class="flex items-center space-x-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span class="font-medium text-xs text-white">Hiromi Higuruma</span>
+      </div>
+      <div class="text-[10px] text-zinc-400 font-mono">Defense Counsel</div>
+    </div>
+    <div class="text-zinc-400 group-hover:translate-x-0.5 transition-transform text-xs">
+      &rarr;
+    </div>
+  </div>
+
+  <!-- Slide-Over Drawer -->
+  <aside 
+    id="higurumaChamberDrawer" 
+    class="hidden fixed inset-y-0 right-0 w-full max-w-lg bg-white text-zinc-900 border-l border-zinc-200 z-50 flex flex-col shadow-2xl transition-all"
+  >
+    <!-- Header -->
+    <div class="p-6 bg-zinc-50 border-b border-zinc-200 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center text-lg">
+          ⚖️
+        </div>
+        <div>
+          <h3 class="font-serif text-lg font-semibold text-black">Chamber of Hiromi Higuruma</h3>
+          <p class="text-xs text-zinc-500 font-mono">Defense Counsel &bull; Deadly Sentencing (誅伏賜死)</p>
+        </div>
+      </div>
+      <button onclick="toggleHigurumaChamber()" class="text-zinc-400 hover:text-black p-1">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Motto -->
+    <div class="px-6 py-3 bg-zinc-100 border-b border-zinc-200 text-xs text-zinc-600 italic">
+      "The law is not a tool to blind people; it is a scale that must balance truth with evidence."
+    </div>
+
+    <!-- Quick Inquiries -->
+    <div class="p-4 bg-white border-b border-zinc-200 space-y-2 text-xs">
+      <div class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">Tactical Inquiries</div>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="askHigurumaQuick('Cross-Examine Active Draft for loopholes')" class="bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 p-2 rounded-lg text-left text-zinc-800 transition">
+          ⚖️ Cross-Examine Draft
+        </button>
+        <button onclick="askHigurumaQuick('Scrutinize Indemnity & Liability limits')" class="bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 p-2 rounded-lg text-left text-zinc-800 transition">
+          🔍 Scrutinize Liability
+        </button>
+        <button onclick="askHigurumaQuick('How do we defend against a breach of contract claim?')" class="bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 p-2 rounded-lg text-left text-zinc-800 transition">
+          🛡️ Breach Defense
+        </button>
+        <button onclick="askHigurumaQuick('What does Judgeman think of this legal balance?')" class="bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 p-2 rounded-lg text-left text-zinc-800 transition">
+          🏛️ Legal Philosophy
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Thread -->
+    <div id="higurumaChatThread" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs select-text bg-zinc-50/50">
+      <div class="bg-white border border-zinc-200 p-4 rounded-xl space-y-2 shadow-2xs">
+        <div class="flex items-center space-x-1.5 font-semibold text-black">
+          <span>⚖️</span>
+          <span>Hiromi Higuruma:</span>
+        </div>
+        <p class="text-zinc-700 leading-relaxed">
+          I am listening. Whether you need to cross-examine a counterparty's clause, identify hidden liabilities in an indemnity provision, or formulate an ironclad courtroom defense—tell me what evidence or draft we are dealing with.
+        </p>
+      </div>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="p-4 bg-white border-t border-zinc-200">
+      <form onsubmit="sendHigurumaMessage(event)" class="flex space-x-2">
+        <input 
+          type="text" 
+          id="higurumaMessageInput" 
+          placeholder="Consult Higuruma on clause vulnerabilities, strategy..."
+          class="flex-1 bg-zinc-50 border border-zinc-200 focus:border-black rounded-lg px-3.5 py-2.5 text-xs text-zinc-900 outline-none"
+        >
+        <button 
+          type="submit" 
+          class="bg-black hover:bg-zinc-800 text-white px-4 py-2.5 rounded-lg font-medium text-xs transition"
+        >
+          Inquire
+        </button>
+      </form>
+    </div>
+  </aside>
+
+
+  <!-- Voice Agent Modal -->
+  <div id="voiceModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative border border-zinc-200">
+      <button onclick="closeVoiceModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-black">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-12 h-12 rounded-xl bg-zinc-100 text-black flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="mic" class="w-6 h-6"></i>
+      </div>
+
+      <h3 class="font-serif text-2xl font-normal text-black">Voice Input</h3>
+      <p class="text-xs text-zinc-500 mt-1">Dictate instructions or spoken legal commands.</p>
+
+      <div id="voiceTranscriptDisplay" class="my-5 p-3.5 rounded-xl bg-zinc-50 border border-zinc-200 text-xs text-zinc-800 min-h-[50px] flex items-center justify-center italic">
+        "Listening for spoken instructions... (e.g. 'Draft an NDA', 'Review this contract')"
+      </div>
+
+      <div class="flex flex-wrap gap-1.5 justify-center text-[11px] mb-5">
+        <button onclick="simulateVoice('Draft a Mutual NDA under Indian law')" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-2.5 py-1 rounded-md transition">"Draft a Mutual NDA"</button>
+        <button onclick="simulateVoice('Review this contract for risks')" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-2.5 py-1 rounded-md transition">"Review contract"</button>
+      </div>
+
+      <button onclick="processVoiceInput()" class="w-full bg-black hover:bg-zinc-800 text-white font-medium py-2.5 rounded-lg text-xs transition">
+        Stop Listening & Process
+      </button>
+    </div>
+  </div>
+
+  <!-- Consequential Safety Modal -->
+  <div id="safetyModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 text-left shadow-2xl border border-zinc-200">
+      <div class="flex items-center space-x-3 text-red-600 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+          <i data-lucide="shield-alert" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 id="safetyTitle" class="font-medium text-black text-sm">Action Confirmation</h3>
+          <span class="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.2 rounded font-semibold uppercase">Safety Guard</span>
+        </div>
+      </div>
+
+      <p id="safetyDesc" class="text-xs text-zinc-600 leading-relaxed mb-4">
+        You are about to execute a consequential legal action. Please confirm.
+      </p>
+
+      <div id="safetyDetail" class="bg-zinc-50 p-3 rounded-lg border border-zinc-200 mb-4 text-xs font-mono text-zinc-900">
+        Action: Replace active draft
+      </div>
+
+      <div class="flex items-center justify-end space-x-2 pt-2 border-t border-zinc-100">
+        <button onclick="closeSafetyModal()" class="px-4 py-2 rounded-lg border border-zinc-200 text-zinc-700 text-xs hover:bg-zinc-50 transition">
+          Cancel
+        </button>
+        <button onclick="confirmSafetyAction()" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-medium transition">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Engine -->
+  <script src="/static/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
