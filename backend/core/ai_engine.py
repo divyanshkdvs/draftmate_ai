@@ -53,9 +53,10 @@ class AIOrchestrator:
     """Orchestrates LLM calls across providers with fallback to offline legal synthesis."""
 
     def __init__(self):
-        self.openai_key = os.getenv("OPENAI_API_KEY", "")
-        self.anthropic_key = os.getenv("ANTHROPIC_API_KEY", "")
-        self.gemini_key = os.getenv("GEMINI_API_KEY", "")
+        self.openai_key = os.getenv("OPENAI_API_KEY",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"")
+        self.anthropic_key = os.getenv("ANTHROPIC_API_KEY",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 "")
+        self.gemini_key = os.getenv("GEMINI_API_KEY", AQ.Ab8RN6IqcFKvF7hjTZucutIwGVoIPsU4RrWIpQ8vTTPk1nCa4A"")
+        self.groq_key = os.getenv("GROQ_API_KEY", "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")
 
     async def generate_response(
         self,
