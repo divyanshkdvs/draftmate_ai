@@ -137,7 +137,7 @@ draftmate_ai/
 
 ## How it was built
 
-This version was led by Divyansh Kumar, who handled product design, feature selection and research into existing legal-tech tools. The code was developed with an AI coding assistant (Google Antigravity) under his direction, and he reviewed and tested the result. The interface takes design inspiration from modern legal-tech products.
+This version was led by Divyansh Kumar, who handled product design, feature selection and research into existing legal-tech tools. The code was developed with an AI coding assistant Claude Opus 4.6, Claude Sonnet 4.6, Gemini Anti-gravity, GPT-OSS 120B under his direction, and he reviewed and tested the result with his team members. The interface takes design inspiration from modern legal-tech products.
 
 ## Acknowledgements
 
@@ -148,7 +148,7 @@ This version was led by Divyansh Kumar, who handled product design, feature sele
 
 ## Team
 
-DraftMate was created by a team of four at RGIPT for the Kodekurrent Season 2 Hackathon. Each member built a prototype, and this version was selected as the team's final submission.
+DraftMate was created by a team of four at RGIPT for the Kodekurrent Season 2 Hackathon. Team built 3 prototype, and this version was selected as the team's final submission.
 
 | Name | Program | GitHub |
 |---|---|---|
