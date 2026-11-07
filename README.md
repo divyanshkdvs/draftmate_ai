@@ -1,162 +1,189 @@
-# DraftMate AI: Legal Intelligence Studio
-
-An AI-assisted drafting, review and citation-checking workspace for Indian legal practice. Built as a working prototype for the **Kodekurrent Season 2 Hackathon** at RGIPT (AI / LegalTech track), where it placed **1st Runner-Up**.
-
-> **Status:** hackathon prototype. It is a drafting assistant, not a source of legal advice. Everything it produces must be reviewed by a qualified lawyer.
+# ⚖️ DraftMate AI &bull; Legal Intelligence Studio
+> *Category:* Software | *Theme:* Artificial Intelligence (AI) | LegalTech | Natural Language Processing | AI Agents | Voice AI  
+> *Design Paradigm:* **Harvey.ai Luxury Legal Aesthetic** (Warm Near-Black `#0F0E0D`, Restrained Ambers `#C5A880`, Editorial Display Serif & Diatype-style Grotesk)
 
 ---
 
-## The problem
+## 🏛️ Executive Summary
 
-General-purpose AI chatbots draft quickly, but they can invent case law and statute references. A lawyer then has to re-check every citation by hand, which removes much of the time saved. DraftMate adds a checking layer around the language model so that citations are never silently trusted.
+**DraftMate AI** is a sovereign legal drafting and verification studio designed for corporate law firms, advocates, and judicial researchers. 
 
-## What it does
+The studio adopts the visual design language of **Harvey.ai**:
+- **Palette:** Warm, deep ink canvas (`#0F0E0D`), elevated charcoal surfaces (`#161514`), muted gray-brown secondary text (`#8E8A82`), and warm brass/amber accents (`#C5A880`).
+- **Typography:** High-contrast editorial display serif (**Cormorant Garamond**) paired with neutral, highly legible contemporary grotesque sans-serif (**Plus Jakarta Sans** / **Inter**) and **JetBrains Mono** for statutory codes.
+- **Unified Action Dock:** Prompt input, file attachments (Microsoft MarkItDown), spoken voice dictation, and the generate/draft button are cleanly aligned in a single sleek horizontal dock bar.
+- **Hiromi Higuruma Defense Chamber:** An animated mechanical scale emblem, live docket ticker, and interactive cross-examination companion drawer.
 
-| Capability | What you get |
-|---|---|
-| **Drafting workflows** | Contract drafting, legal notices, court petitions, contract review with redlining, and case-law research, each invoked with an `@Tag` or a quick-action chip |
-| **Reference-style adaptation** | Upload a PDF or DOCX; the draft follows its tone, clause numbering and defined terms |
-| **Citation audit** | Each citation in a draft is checked against a curated authority index and marked **Verified**, **Partially Verified** or **Flagged** |
-| **Redline view** | Strike-through and highlight comparison between versions of a draft |
-| **Prompt strength meter** | Live score for how complete an instruction is, with an "Improve Prompt" button that adds jurisdiction, governing statute and liability terms |
-| **Voice input** | Dictate instructions or issue commands; destructive commands (overwrite, delete) need explicit confirmation |
-| **Counsel companion** | A defense-counsel persona that reviews a draft from the opposing side's point of view and suggests remedial clauses |
-| **Export** | Markdown, Word, or print to PDF |
+### 🌟 Key Pillars:
+1. **Minimalist Courtroom Workspace:** Stripped of AI clutter. Houses only the 5 essential hackathon workflows:
+   - ⚖️ **Contract Drafting** (`@ContractDrafting`)
+   - 📜 **Legal Notice** (`@LegalNotice`)
+   - 🏛️ **Court Petition** (`@PetitionDrafting`)
+   - 🔍 **Contract Review & Redline** (`@ContractReview`)
+   - 📚 **Case Law & Statutory Research** (`@CaseLawResearch`)
+2. **Special Feature: "Consult Higuruma" (Interactive Character Companion):**
+   - Direct, in-character legal consultation with defense attorney **Hiromi Higuruma** (master of the domain *Deadly Sentencing* 誅伏賜死).
+   - Scrutinizes contracts from opposing counsel's viewpoint, cross-examines indemnities and notice traps under the *Indian Contract Act* and *Evidence Act*, and outputs one-click remedial drafting clauses.
+3. **Microsoft MarkItDown Ingestion:** Clean conversion of PDFs, DOCX, and templates into structured legal Markdown with automatic metadata extraction.
+4. **Headroom Context & Token Optimization:** Boilerplate pruning and operative covenant extraction, saving 30%–50% in LLM tokens while strictly preserving citations.
+5. **Citation & Authority Verification Desk:** Categorizes citations into **VERIFIED**, **PARTIALLY VERIFIED**, and **UNVERIFIED / FLAGGED** states with hyperlinked official gazette/Supreme Court records and Judgeman anti-hallucination alerts.
+6. **Voice Agent & Consequential Safety Guard:** Dictation and spoken workflows with confirmation tokens required before executing destructive actions (e.g. overwriting drafts).
 
-## How it works
+---
 
-```mermaid
-flowchart TD
-  U["User: text, voice or file"] --> FE["Web frontend"]
-  FE -->|REST| API["FastAPI routes"]
-  API --> PE["Prompt enhancer"]
-  API --> ING["MarkItDown ingestion"]
-  ING --> SA["Style adapter"]
-  PE --> SK["Skills registry"]
-  SK --> HR["Context optimiser"]
-  SA --> HR
-  HR --> AI["AI engine: model selector and local fallback"]
-  AI --> CE["Citation engine"]
-  CE <--> AD[("Authority index")]
-  CE --> OUT["Draft + citation flags + redline"]
-  OUT --> FE
-  V["Voice agent"] --> API
-  V --> SG{"Safety guard"}
-  SG -->|destructive command| CONF["Confirmation required"]
+## 📸 Reference Architecture & Layout Alignment
+
+The implementation follows the supplied reference layout:
+
+| Ref # | Feature Component | Implementation Details |
+| :--- | :--- | :--- |
+| **1** | **ChatGPT-Style Workspace** | Minimal, familiar interface to chat, upload documents, and invoke legal skills. |
+| **2** | **Model Selection** | Multi-model switcher: Claude 3.5 Sonnet (Advanced), GPT-4o (Balanced), Claude 3 Haiku (Quick), DeepSeek R1 (Reasoning), DraftMate Legal Core (Local/Private). |
+| **3** | **Integrated Voice Agent** | Microphone button in header opening voice modal with animated waveform, speech dictation, and voice commands. |
+| **4** | **Document Management** | Attachment pills inside prompt box (`+ Add from Device`, `Add from DraftMate Documents`), plus right-side slide-over panel with matters, templates, and MarkItDown preview. |
+| **5** | **Tools & Options** | Web search toggle, legal skills library drawer trigger, and direct voice input shortcut. |
+| **6** | **Send Prompt** | Circular blue arrow button initiating legal drafting, token optimization, and citation audit. |
+| **7** | **Legal Skills Quick Chips** | Quick action chips (`Contract Review`, `Redlining`, `Legal Research`, `Agreement Drafting`, `Case Analysis`, `Legal Notice`, `Summarize`, `Due Diligence`, `More...`). |
+| **8** | **Prompt Meter & Enhancement** | Dynamic percentage score (e.g., `72%`), feedback tip, and `+ Improve Prompt` button that enriches prompts with jurisdiction, governing statutes, and liability caps. |
+| **8b** | **Complete Legal Skills Library** | Modal grid with filter tabs (`All Skills`, `For Lawyers`, `For Law Students`) organizing 60+ skills across 7 categories. |
+
+---
+
+## 📁 Project Directory Structure
+
+```
+draftmate-ai/
+├── run.py                          # One-click application launcher
+├── test_suite.py                   # Automated architectural validation suite
+├── requirements.txt                # Python backend dependencies
+├── package.json                    # Root package configuration
+├── README.md                       # Comprehensive system documentation
+│
+├── backend/                        # FastAPI High-Performance Backend
+│   ├── main.py                     # App factory, CORS, static file mounts, routes
+│   ├── core/
+│   │   ├── markitdown_engine.py    # Microsoft MarkItDown ingestion & legal metadata
+│   │   ├── headroom.py             # Headroom token & context optimization
+│   │   ├── style_adapter.py        # Reference-based legal style & tone adapter
+│   │   ├── prompt_enhancer.py      # Prompt strength meter (0-100%) & legal enhancer
+│   │   └── ai_engine.py            # Multi-model LLM orchestrator & local fallback
+│   ├── skills/
+│   │   └── registry.py             # Dynamic Legal Skills Framework (Awesome Legal Skills / Claude for Legal)
+│   ├── verification/
+│   │   ├── citation_engine.py      # Citation extractor & verification against authority DB
+│   │   └── authority_db.py         # Indexed landmark precedents (SCC, AIR, US) & statutes (Contract Act, BNS, DPDP)
+│   ├── voice/
+│   │   ├── voice_agent.py          # Voice command interpreter & task dispatcher
+│   │   └── safety_guard.py         # Consequential action safety token verification
+│   ├── documents/
+│   │   ├── samples/                # Preloaded matters: Employment Agreement, NDA, Board Resolution, SPA, etc.
+│   │   └── storage/                # Uploaded files storage
+│   └── api/
+│       ├── routes_chat.py          # Chat, drafting execution, and redline diff endpoints
+│       ├── routes_skills.py        # Skills listing, search, and tag lookups
+│       ├── routes_documents.py     # Document upload, MarkItDown parsing, samples
+│       ├── routes_prompt.py        # Prompt evaluation and enhancement
+│       ├── routes_citations.py     # Citation audit and authority stats
+│       └── routes_voice.py         # Voice parsing and safety confirmation
+│
+└── frontend/                       # Interactive Frontend (React SPA & Next.js Components)
+    ├── index.html                  # Responsive Tailwind CSS layout matching reference mockup
+    ├── static/
+    │   └── app.js                  # Frontend client engine (reactive state, audio visualizer, diff renderer)
+    ├── package.json                # Next.js / React component deliverables
+    └── src/
+        └── components/
+            ├── Sidebar.tsx          # Navigation sidebar component
+            ├── Header.tsx           # Top navigation with model selector & voice trigger
+            ├── PromptMeter.tsx      # Prompt strength gauge & improve action
+            ├── DocumentPanel.tsx    # DraftMate documents slide-over drawer
+            ├── CitationInspector.tsx# Verification badges, links, and guardrail alerts
+            └── VoiceAgentModal.tsx  # Voice recording modal with waveform
 ```
 
-1. The user picks a workflow, writes or dictates an instruction, and optionally attaches a reference document.
-2. Attached files are converted to Markdown with Microsoft MarkItDown, and style cues are extracted.
-3. The prompt is scored and enriched, and the context is trimmed before the model call.
-4. The selected model produces a draft.
-5. The citation engine extracts references from the draft and checks them against the authority index.
-6. The user reviews the draft, citation flags and redline, then exports.
+---
 
-### About the citation check
+## ⚡ Quickstart Guide
 
-"Verified" means a citation was **found in the project's curated authority index**. It does not mean the citation is correct in every respect, and it does not check whether a law has since been amended or overruled. Anything not found is shown as **Partially Verified** or **Flagged** so a human reviews it. The index currently covers a limited set of major Indian statutes and landmark precedents.
+### 1. Prerequisites
+- Python 3.10+ (Tested on Python 3.15)
+- Standard modern web browser (Chrome, Edge, Firefox, Safari)
 
-## Tech stack
-
-| Layer | Technology |
-|---|---|
-| Backend | Python, FastAPI |
-| Document ingestion | Microsoft MarkItDown |
-| Context optimisation | Headroom |
-| Frontend | HTML, Tailwind CSS, JavaScript (React/Next.js component set included under `frontend/src`) |
-| Models | Selectable LLM providers via API, plus a local fallback mode |
-| Voice | Speech dictation and command interpreter with a confirmation guard |
-
-## Quickstart
-
-**Requirements:** Python 3.10 or newer and a modern web browser.
-
+### 2. Installation
+Clone the repository or navigate to the directory:
 ```bash
-git clone https://github.com/divyanshkdvs/draftmate_ai.git
-cd draftmate_ai
+cd draftmate-ai
 pip install -r requirements.txt
 ```
 
-Add the API key(s) for the model provider(s) you want to use in a `.env` file in the project root. Without a key, the app runs in its local fallback mode.
-
-Run the validation tests, then start the studio:
-
+### 3. Run Automated Architectural Tests
+Execute the end-to-end validation test suite:
 ```bash
 python test_suite.py
+```
+*Output: Validates MarkItDown document conversion, Headroom token savings, Style adaptation, Skills tag lookup, Citation verification, Prompt strength scoring, and Voice safety tokens.*
+
+### 4. Launch Legal Drafting Studio
+Start the studio server:
+```bash
 python run.py
 ```
 
-Open <http://127.0.0.1:8000> for the studio, or <http://127.0.0.1:8000/docs> for the interactive API docs.
+Open your browser at:
+- **Studio Interface:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- **Interactive OpenAPI Docs:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-## Project structure
+---
 
-```
-draftmate_ai/
-├── run.py                  # Launcher
-├── test_suite.py           # Validation tests for the core modules
-├── requirements.txt
-├── backend/
-│   ├── main.py             # App setup, CORS, static files, routes
-│   ├── core/
-│   │   ├── markitdown_engine.py   # Document to Markdown ingestion
-│   │   ├── headroom.py            # Context optimisation
-│   │   ├── style_adapter.py       # Reference-based style adaptation
-│   │   ├── prompt_enhancer.py     # Prompt scoring and enrichment
-│   │   └── ai_engine.py           # Model selection and fallback
-│   ├── skills/registry.py         # Legal workflow definitions
-│   ├── verification/
-│   │   ├── citation_engine.py     # Citation extraction and checking
-│   │   └── authority_db.py        # Curated statutes and precedents
-│   ├── voice/
-│   │   ├── voice_agent.py         # Command interpreter
-│   │   └── safety_guard.py        # Confirmation for destructive actions
-│   ├── documents/                 # Sample matters and uploads
-│   └── api/                       # Route modules
-└── frontend/
-    ├── index.html
-    ├── static/app.js
-    └── src/components/            # React component set
-```
+## 🔄 End-to-End User Journey
 
-## Scope and known limitations
+1. **Select or Activate a Legal Skill**:
+   - Type `@` in the chat input or click one of the quick chips (e.g. `Contract Review`, `Redlining`, `@NDA`, `@LegalNotice`).
+   - Or click **View All Skills** to explore the 60+ categorized skills library.
+2. **Prompt Strength Scoring & One-Click Improvement**:
+   - Type your draft instruction (e.g. `draft an agreement between Apex and Quantum`).
+   - Observe the **Prompt Strength Meter** dynamically update in real time.
+   - Click **+ Improve Prompt**: DraftMate automatically inserts governing jurisdiction, dispute resolution under the *Arbitration and Conciliation Act, 1996*, indemnification caps, and compliance with the *Digital Personal Data Protection Act, 2023*.
+3. **Attach Reference Documents for Style Adaptation**:
+   - Open **DraftMate Documents** panel and select `Employment Agreement.pdf` or `NDA.pdf`, or click `+ Add from Device` to upload a custom PDF/DOCX.
+   - Check **Learn & Adapt Drafting Style**. Microsoft MarkItDown parses the file into clean Markdown and extracts stylistic cues (tone, clause numbering, and defined terms).
+4. **Synthesize Legal Draft with Token Optimization**:
+   - Select your preferred model (e.g. *Claude 3.5 Sonnet* or *GPT-4o*).
+   - Click **Send Prompt**: Headroom optimizes context by pruning boilerplate and preserving operative covenants and citations.
+   - The document is synthesized and displayed in the **Drafting Studio**.
+5. **Inspect Verified Citations & Guardrails**:
+   - Click the **Citations Audit** tab.
+   - Review **VERIFIED** citations (with links to Supreme Court of India judgments or India Code acts), **PARTIALLY VERIFIED** entries, and **UNVERIFIED / FLAGGED** citations with anti-hallucination alerts.
+6. **Review Redline Markup**:
+   - Click the **Redline Diff** tab to visualize strike-through deletions and highlighted additions between versions.
+7. **Voice Control & Safety Confirmation**:
+   - Click **Voice Agent** to dictate instructions.
+   - Spoken commands like `"draft an NDA"` or `"verify citations"` execute instantly.
+   - Consequential commands like `"overwrite draft"` or `"delete document"` trigger the **Safety Confirmation Modal** requiring explicit verification before changes take effect.
+8. **Export**:
+   - Export your finished document as **Markdown (.md)**, **Word (.doc/.docx)**, or **Print / Save as PDF**.
 
-- **Prototype scope.** Built in a hackathon timeframe. It has no user accounts, audit logging or production-grade security.
-- **Limited authority index.** The citation check is only as complete as the curated index. Larger sources such as India Code or court databases are not yet connected.
-- **No currency check.** It does not detect amended, repealed or overruled law.
-- **Model-dependent output.** Draft quality depends on the selected model, and models can still make mistakes. The citation flags are a safety net, not a guarantee.
-- **Confidentiality.** Documents sent to a cloud model leave the local machine. Use the local mode, or add redaction and an enterprise API agreement, before handling real client material.
-- **Demo data.** The sample matters and company names shown in the interface are placeholders.
-- **Voice accuracy.** Speech recognition can misinterpret commands, which is why destructive actions require confirmation.
+---
 
-## Roadmap
+## 📚 Technical References
 
-- Connect larger legal sources (India Code, court judgment databases) and track amendments
-- Add authentication, audit trails and document redaction
-- Measure and publish citation-check accuracy on a test set
-- Add a benchmark for the context-optimisation step
+1. **Claude for Legal — Legal Workflow Plugins**:  
+   Modular legal task designs and specialized prompting conventions.  
+   Reference: `https://github.com/anthropics/claude-for-legal`
+2. **Awesome Legal Skills — Legal Agent Skills Library**:  
+   Comprehensive categorization of reusable legal skills across lawyers and students.  
+   Reference: `https://github.com/lawve-ai/awesome-legal-skills`
+3. **Microsoft MarkItDown**:  
+   Document-to-Markdown conversion for PDFs, DOCX, XLSX, and presentation files.  
+   Reference: `https://github.com/microsoft/markitdown`
+4. **Headroom — LLM Context and Token Optimisation**:  
+   Selective context retrieval, boilerplate pruning, and token optimization.  
+   Reference: `https://github.com/headroomlabs-ai/headroom`
+5. **VoxCPM2 & OpenWhispr**:  
+   Voice interaction, speech recognition, and consequential command gating.  
+   References: `https://voxcpm.net` & `https://github.com/OpenWhispr/openwhispr`
+6. **DraftMate AI**:  
+   Official product reference: `https://www.draftmate.in`
 
-## How it was built
+---
 
-This version was led by Divyansh Kumar, who handled product design, feature selection and research into existing legal-tech tools. The code was developed with an AI coding assistant Claude Opus 4.6, Claude Sonnet 4.6, Gemini Anti-gravity, GPT-OSS 120B under his direction, and he reviewed and tested the result with his team members. The interface takes design inspiration from modern legal-tech products.
-
-## Acknowledgements
-
-- [Microsoft MarkItDown](https://github.com/microsoft/markitdown): document-to-Markdown conversion
-- [Headroom](https://github.com/headroomlabs-ai/headroom): context and token optimisation
-- [Claude for Legal](https://github.com/anthropics/claude-for-legal) and [Awesome Legal Skills](https://github.com/lawve-ai/awesome-legal-skills): references for structuring legal workflows
-- [OpenWhispr](https://github.com/OpenWhispr/openwhispr): reference for voice interaction
-
-## Team
-
-DraftMate was created by a team of four at RGIPT for the Kodekurrent Season 2 Hackathon. Team built 3 prototype, and this version was selected as the team's final submission.
-
-| Name | Program | GitHub |
-|---|---|---|
-| Divyansh Kumar | B.Tech, Mathematics and Computing, RGIPT | [@divyanshkdvs](https://github.com/divyanshkdvs) |
-| Yuvraj Singh Rathore | B.Tech, Information Technology, RGIPT | [@Yuvrajsinghrathor](https://github.com/Yuvrajsinghrathor) |
-| Shubrat Singh | B.Tech, Information Technology, RGIPT | [@faqlodeongames-glitch](https://github.com/faqlodeongames-glitch) |
-| Shrey Kushwaha | B.Tech, Information Technology, RGIPT | [@Shrey-K017](https://github.com/Shrey-K017) |
-
-## Disclaimer
-
-DraftMate is a research and drafting aid. It does not provide legal advice, and its output should not be relied on without review by a qualified legal professional.

@@ -3,687 +3,735 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DraftMate &bull; Product Innovation for Legal Minds</title>
-  
+  <title>DraftMate &bull; Legal Intelligence Studio</title>
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- Fonts: Newsreader (Matching Harvey's TWK Ghost serif) & Inter (Matching Harvey's ABC Diatype sans) -->
+
+  <!-- Fonts: Newsreader serif (editorial) + Inter sans (UI) + JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
             harvey: {
-              bg: '#FFFFFF',
-              surface: '#FBFBFB',
-              card: '#F4F4F5',
-              dark: '#111111',
-              darkCard: '#18181B',
-              darkBorder: '#27272A',
-              border: '#E4E4E7',
-              borderLight: '#F1F1F4',
-              text: '#09090B',
-              muted: '#71717A',
-              subtle: '#A1A1AA',
-              tagBg: '#09090B',
-              tagText: '#FFFFFF',
-              green: '#15803D',
-              greenBg: '#F0FDF4',
+              bg:          '#F2F0ED',   /* off-white warm background — exact Harvey.ai */
+              bgAlt:       '#ECEAE6',   /* slightly darker warm surface */
+              white:       '#FFFFFF',
+              ink:         '#0A0A0A',   /* near-black */
+              inkMuted:    '#404040',   /* body text */
+              muted:       '#767676',   /* secondary text */
+              subtle:      '#A8A29E',   /* tertiary / disabled */
+              rule:        '#D6D3CF',   /* hairline dividers */
+              border:      '#C9C6C1',   /* input borders */
+              dark:        '#1C1C1C',   /* dark card bg */
+              darkBorder:  '#2E2E2E',
+              darkText:    '#E8E6E1',
+              green:       '#166534',
+              greenBg:     '#F0FDF4',
               greenBorder: '#BBF7D0',
-              amber: '#B45309',
-              amberBg: '#FFFBEB',
+              amber:       '#92400E',
+              amberBg:     '#FFFBEB',
               amberBorder: '#FDE68A',
-              red: '#B91C1C',
-              redBg: '#FEF2F2',
-              redBorder: '#FECACA'
+              red:         '#991B1B',
+              redBg:       '#FEF2F2',
+              redBorder:   '#FECACA'
             }
           },
           fontFamily: {
             serif: ['"Newsreader"', 'Georgia', 'serif'],
-            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
+            sans:  ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono:  ['"JetBrains Mono"', 'monospace']
+          },
+          fontSize: {
+            '2xs': ['0.65rem', { lineHeight: '1rem' }]
           }
         }
       }
     }
   </script>
-  
+
   <style>
+    /* Base */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      background-color: #FFFFFF;
-      color: #09090B;
-      font-family: 'Inter', sans-serif;
+      background-color: #F2F0ED;
+      color: #0A0A0A;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-font-smoothing: antialiased;
-      letter-spacing: -0.011em;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 14px;
+      line-height: 1.6;
+      letter-spacing: -0.008em;
     }
 
-    .harvey-serif {
+    /* Editorial serif utility */
+    .dm-serif {
       font-family: 'Newsreader', Georgia, serif;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
     }
 
-    /* Custom subtle scrollbar */
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
+    /* Hairline divider */
+    .dm-rule { border-color: #D6D3CF; }
+
+    /* Scrollbar — minimal */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #C9C6C1; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: #A8A29E; }
+
+    /* Higuruma drawer slide-in */
+    #higurumaChamberDrawer {
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    ::-webkit-scrollbar-track {
-      background: #FFFFFF;
+    #higurumaChamberDrawer.open {
+      transform: translateX(0);
     }
-    ::-webkit-scrollbar-thumb {
-      background: #E4E4E7;
-      border-radius: 4px;
+
+    /* Dock widget — scales animation */
+    @keyframes scaleBalance {
+      0%, 100% { transform: rotate(-1.5deg); }
+      50%       { transform: rotate(1.5deg); }
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #A1A1AA;
+    .scales-animate { animation: scaleBalance 3s ease-in-out infinite; }
+
+    /* Studio output fade-in */
+    #studioOutputContainer {
+      animation: fadeSlideUp 0.3s ease forwards;
     }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Textarea — no chrome */
+    textarea:focus, input:focus { outline: none; box-shadow: none; }
+
+    /* Citation badge */
+    .badge-verified  { background: #F0FDF4; color: #166534; border-color: #BBF7D0; }
+    .badge-partial   { background: #FFFBEB; color: #92400E; border-color: #FDE68A; }
+    .badge-unverified{ background: #FEF2F2; color: #991B1B; border-color: #FECACA; }
   </style>
 </head>
-<body class="min-h-screen bg-white text-zinc-950 antialiased selection:bg-zinc-900 selection:text-white">
 
-  <!-- ========================================================================= -->
-  <!-- 1. NAVIGATION BAR (Harvey Minimalist Header) -->
-  <!-- ========================================================================= -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-200">
-    <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-      
-      <!-- Logo Wordmark -->
-      <a href="#" class="flex items-center space-x-2.5">
-        <span class="w-6 h-6 rounded-md bg-black text-white flex items-center justify-center font-serif text-sm font-bold">
-          D
+<body class="min-h-screen selection:bg-harvey-ink selection:text-harvey-bg">
+
+  <!-- ================================================================= -->
+  <!-- NAV — Harvey.ai style: warm bg, hairline bottom border, tight nav  -->
+  <!-- ================================================================= -->
+  <header class="sticky top-0 z-40 bg-harvey-bg border-b dm-rule border-b">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+
+      <!-- Wordmark -->
+      <a href="#" class="flex items-center gap-2.5 no-underline">
+        <span class="w-5 h-5 rounded-sm bg-harvey-ink flex items-center justify-center">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M1 1h4c2.2 0 4 1.8 4 4s-1.8 4-4 4H1V1z" fill="white"/>
+          </svg>
         </span>
-        <span class="font-serif text-2xl font-semibold tracking-tight text-black">
-          DraftMate
-        </span>
+        <span class="dm-serif text-xl font-medium text-harvey-ink tracking-tight">DraftMate</span>
       </a>
 
-      <!-- Clean Minimal Nav Links -->
-      <nav class="hidden md:flex items-center space-x-9 text-sm font-medium text-zinc-600">
-        <a href="#agents" class="hover:text-black transition-colors">Agents</a>
-        <a href="#studio" class="hover:text-black transition-colors">Studio</a>
-        <a href="#solutions" class="hover:text-black transition-colors">Solutions</a>
-        <a href="#verification" class="hover:text-black transition-colors">Authority</a>
-        <button onclick="toggleHigurumaChamber()" class="hover:text-black transition-colors flex items-center space-x-1.5 text-zinc-900 font-semibold">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Higuruma Counsel</span>
+      <!-- Nav links — no pulse dots, no emoji -->
+      <nav class="hidden md:flex items-center gap-8 text-[13px] font-medium text-harvey-muted">
+        <a href="#agents" class="hover:text-harvey-ink transition-colors duration-150">Agents</a>
+        <a href="#studio" class="hover:text-harvey-ink transition-colors duration-150">Studio</a>
+        <a href="#solutions" class="hover:text-harvey-ink transition-colors duration-150">Solutions</a>
+        <a href="#authority" class="hover:text-harvey-ink transition-colors duration-150">Authority</a>
+        <button onclick="toggleHigurumaChamber()" class="hover:text-harvey-ink transition-colors duration-150 text-harvey-inkMuted font-medium">
+          Counsel
         </button>
       </nav>
 
-      <!-- Right Action: Clean Black Rounded Button -->
-      <div class="flex items-center space-x-3">
-        <a 
-          href="#studio" 
-          class="inline-flex items-center justify-center bg-black hover:bg-zinc-800 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-all shadow-xs"
-        >
-          Request a Demo
-        </a>
-      </div>
+      <!-- CTA -->
+      <a href="#studio" class="hidden md:inline-flex items-center bg-harvey-ink hover:bg-harvey-dark text-harvey-bg text-[13px] font-medium px-4 py-2 rounded-md transition-colors duration-150">
+        Open Studio
+      </a>
 
+      <!-- Mobile menu toggle (icon only) -->
+      <button class="md:hidden text-harvey-inkMuted p-1" onclick="document.getElementById('mobileNav').classList.toggle('hidden')">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Mobile nav -->
+    <div id="mobileNav" class="hidden md:hidden border-t dm-rule bg-harvey-bg px-6 py-4 space-y-3 text-sm font-medium text-harvey-inkMuted">
+      <a href="#agents" class="block hover:text-harvey-ink">Agents</a>
+      <a href="#studio" class="block hover:text-harvey-ink">Studio</a>
+      <a href="#solutions" class="block hover:text-harvey-ink">Solutions</a>
+      <a href="#authority" class="block hover:text-harvey-ink">Authority</a>
+      <button onclick="toggleHigurumaChamber()" class="block text-left hover:text-harvey-ink w-full">Counsel</button>
     </div>
   </header>
 
 
-  <!-- ========================================================================= -->
-  <!-- 2. HERO SECTION (Matching Screenshot 1: "Introducing Harvey II") -->
-  <!-- ========================================================================= -->
-  <section class="max-w-5xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-16 text-center space-y-6">
-    
-    <!-- Top Pill Badge (Exact replica of Screenshot 1) -->
-    <div class="inline-flex items-center justify-center">
-      <span class="bg-black text-white text-[11px] font-semibold uppercase tracking-wider px-3.5 py-1 rounded-md">
-        NEW
-      </span>
-    </div>
+  <!-- ================================================================= -->
+  <!-- HERO — Exact Harvey.ai layout: warm bg, massive serif, single CTA  -->
+  <!-- ================================================================= -->
+  <section class="max-w-4xl mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-20 text-center">
 
-    <!-- Main Title in Newsreader Serif (Matching "Introducing Harvey II") -->
-    <h1 class="harvey-serif text-6xl sm:text-7xl md:text-8xl font-normal text-black tracking-tight leading-none">
-      Introducing DraftMate II
+    <h1 class="dm-serif text-6xl sm:text-7xl md:text-[5.5rem] font-light text-harvey-ink tracking-tight leading-[0.95] mb-7">
+      Introducing<br>DraftMate II
     </h1>
 
-    <!-- Refined Subtitle in Inter (Matching Screenshot 1) -->
-    <p class="text-lg sm:text-xl md:text-2xl text-zinc-600 font-normal max-w-3xl mx-auto leading-relaxed">
-      The most powerful legal drafting platform yet. Smarter workflows can now deliver more complex work in exactly the way you like it.
+    <p class="text-[15px] md:text-base text-harvey-inkMuted font-normal max-w-xl mx-auto leading-relaxed mb-10">
+      Legal intelligence for firms that cannot afford errors. Draft, review, and verify with precision instruments built for institutional practice.
     </p>
 
-    <!-- Center Call-to-Action (Matching Screenshot 1) -->
-    <div class="pt-4 flex items-center justify-center space-x-4">
-      <a 
-        href="#studio" 
-        class="inline-flex items-center justify-center bg-black hover:bg-zinc-800 text-white text-base font-medium px-8 py-3.5 rounded-lg transition-all shadow-sm"
-      >
-        Request a Demo
+    <div class="flex items-center justify-center gap-3">
+      <a href="#studio"
+        class="inline-flex items-center bg-harvey-ink hover:bg-harvey-dark text-harvey-bg text-sm font-medium px-7 py-3 rounded-md transition-colors duration-150">
+        Open Studio
       </a>
-      <a 
-        href="#studio" 
-        class="inline-flex items-center justify-center bg-zinc-100 hover:bg-zinc-200 text-black text-base font-medium px-7 py-3.5 rounded-lg transition-all"
-      >
-        Start Drafting
+      <a href="#agents"
+        class="inline-flex items-center text-harvey-inkMuted hover:text-harvey-ink text-sm font-medium px-5 py-3 rounded-md border border-harvey-rule hover:border-harvey-border transition-colors duration-150">
+        View Agents
       </a>
     </div>
-
   </section>
 
 
-  <!-- ========================================================================= -->
-  <!-- 3. PRODUCT INNOVATION & AGENTS (Matching Screenshot 2) -->
-  <!-- ========================================================================= -->
-  <section id="agents" class="max-w-7xl mx-auto px-6 md:px-12 py-16 border-t border-zinc-200">
-    
-    <h2 class="text-3xl md:text-4xl font-medium text-black mb-12 tracking-tight">
+  <!-- ================================================================= -->
+  <!-- PRODUCT FEATURES — Harvey.ai screenshot 2 layout: list + mock UI   -->
+  <!-- ================================================================= -->
+  <section id="agents" class="max-w-7xl mx-auto px-6 md:px-12 py-20 border-t dm-rule">
+
+    <h2 class="dm-serif text-3xl md:text-4xl font-light text-harvey-ink mb-14 tracking-tight">
       Product Innovation for the Best Legal Minds
     </h2>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-      
-      <!-- Left Column: Tabbed Features with 1px Hairlines (Matching Screenshot 2) -->
-      <div class="lg:col-span-4 space-y-1 divide-y divide-zinc-200">
-        
-        <!-- Active Tab: Agents -->
-        <div class="py-5 first:pt-0">
-          <div class="text-xl font-medium text-black">Agents</div>
-          <p class="text-sm text-zinc-600 mt-2 leading-relaxed">
-            Orchestrate complex legal work, with tasks automatically routed to the right agent.
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+
+      <!-- Left: feature tabs separated by hairlines -->
+      <div class="lg:col-span-4 divide-y divide-harvey-rule">
+
+        <div class="pb-6">
+          <div class="text-[15px] font-medium text-harvey-ink mb-1.5">Agents</div>
+          <p class="text-[13px] text-harvey-muted leading-relaxed">
+            Orchestrate complex legal work, with tasks automatically routed to the specialist agent.
           </p>
-          <a href="#studio" class="inline-block mt-3 text-sm font-medium text-black hover:underline">
-            Learn More &rarr;
-          </a>
+          <a href="#studio" class="inline-block mt-3 text-[13px] font-medium text-harvey-ink hover:underline underline-offset-2">Learn more &rarr;</a>
         </div>
 
-        <!-- Inactive Tab: Spaces -->
-        <div class="py-4">
-          <button onclick="setWorkflow('@ContractDrafting', 'Spaces')" class="text-lg font-medium text-zinc-500 hover:text-black transition text-left w-full">
-            Spaces
-          </button>
+        <div class="py-6">
+          <div class="text-[15px] font-medium text-harvey-inkMuted mb-1">Legal Skills</div>
+          <p class="text-[13px] text-harvey-muted leading-relaxed">Invoke 19 specialised workflows — from Contract Drafting to Citation Verification.</p>
         </div>
 
-        <!-- Inactive Tab: Vault -->
-        <div class="py-4">
-          <button onclick="setWorkflow('@CaseLawResearch', 'Vault')" class="text-lg font-medium text-zinc-500 hover:text-black transition text-left w-full">
-            Vault
-          </button>
+        <div class="py-6">
+          <div class="text-[15px] font-medium text-harvey-inkMuted mb-1">Authority Vault</div>
+          <p class="text-[13px] text-harvey-muted leading-relaxed">Cross-reference precedents and statutes against verified databases. No hallucinated case law.</p>
         </div>
 
-        <!-- Inactive Tab: Contract Intelligence -->
-        <div class="py-4">
-          <button onclick="setWorkflow('@ContractReview', 'Contract Intelligence')" class="text-lg font-medium text-zinc-500 hover:text-black transition text-left w-full">
-            Contract Intelligence
-          </button>
+        <div class="py-6">
+          <div class="text-[15px] font-medium text-harvey-inkMuted mb-1">Contract Intelligence</div>
+          <p class="text-[13px] text-harvey-muted leading-relaxed">Redline, compare, and extract agreed positions with structured diff rendering.</p>
         </div>
 
-        <!-- Inactive Tab: Command Center -->
-        <div class="py-4">
-          <button onclick="toggleHigurumaChamber()" class="text-lg font-medium text-zinc-500 hover:text-black transition text-left w-full">
-            Command Center
-          </button>
+        <div class="pt-6">
+          <div class="text-[15px] font-medium text-harvey-inkMuted mb-1">Voice Commands</div>
+          <p class="text-[13px] text-harvey-muted leading-relaxed">Dictate instructions, activate workflows, and confirm safety-gated actions by speech.</p>
         </div>
-
       </div>
 
-      <!-- Right Column: Interactive Progress & File Container (Matching Screenshot 2) -->
+      <!-- Right: mock product UI card -->
       <div class="lg:col-span-8">
-        <div class="bg-zinc-50 border border-zinc-200 rounded-2xl p-6 md:p-8 shadow-xs space-y-6">
-          
-          <div class="flex items-center justify-between border-b border-zinc-200 pb-4 text-xs font-medium text-zinc-500">
-            <div class="flex items-center space-x-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span class="text-zinc-900 font-semibold">Active Agent Task &bull; Matter #4092</span>
+        <div class="bg-harvey-white rounded-md border border-harvey-rule shadow-sm overflow-hidden">
+          <!-- Toolbar -->
+          <div class="flex items-center justify-between px-5 py-3 border-b border-harvey-rule bg-harvey-bg">
+            <div class="flex items-center gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-harvey-rule"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-harvey-rule"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-harvey-rule"></div>
             </div>
-            <div class="flex items-center space-x-3">
-              <span class="hover:text-black cursor-pointer">Share</span>
-              <span>&bull;</span>
-              <span>Progress &darr;</span>
+            <div class="flex items-center gap-3 text-[11px] text-harvey-muted font-mono">
+              <button class="flex items-center gap-1 hover:text-harvey-ink transition-colors">
+                <i data-lucide="share-2" class="w-3 h-3"></i>
+                <span>Share</span>
+              </button>
+              <button class="hover:text-harvey-ink transition-colors">···</button>
             </div>
           </div>
-
-          <!-- Step Progress (Matching Screenshot 2) -->
-          <div class="space-y-3.5 text-xs">
-            
-            <div class="flex items-start space-x-3">
-              <div class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                <i data-lucide="check" class="w-3 h-3"></i>
+          <!-- Content preview -->
+          <div class="grid grid-cols-1 sm:grid-cols-5 min-h-48">
+            <!-- Doc text -->
+            <div class="sm:col-span-3 p-6 text-[12px] text-harvey-inkMuted font-mono leading-relaxed border-r border-harvey-rule space-y-2">
+              <p class="text-harvey-muted">...below the coverage limit the deal team</p>
+              <p>agreed to $2M, per SCC Module Two,</p>
+              <p>removing the "not to be unreasonably</p>
+              <p>withheld" qualifier within the agreed range.</p>
+              <p class="text-harvey-subtle mt-4">Clause includes suggested redline and</p>
+              <p class="text-harvey-subtle">reconciliation table for next turn.</p>
+            </div>
+            <!-- Progress panel -->
+            <div class="sm:col-span-2 p-5 bg-harvey-bg space-y-3">
+              <div class="text-[11px] font-semibold text-harvey-muted uppercase tracking-wider mb-3">Progress</div>
+              <div class="space-y-2.5">
+                <div class="flex items-center gap-2 text-[11px] text-harvey-green"><i data-lucide="check-circle-2" class="w-3 h-3 flex-shrink-0"></i><span class="line-through text-harvey-subtle">Extract agreed positions</span></div>
+                <div class="flex items-center gap-2 text-[11px] text-harvey-green"><i data-lucide="check-circle-2" class="w-3 h-3 flex-shrink-0"></i><span class="line-through text-harvey-subtle">Parse counterparty redline</span></div>
+                <div class="flex items-center gap-2 text-[11px] text-harvey-ink font-medium"><i data-lucide="loader-2" class="w-3 h-3 flex-shrink-0 animate-spin"></i><span>Compare redline changes</span></div>
+                <div class="flex items-center gap-2 text-[11px] text-harvey-subtle"><i data-lucide="circle" class="w-3 h-3 flex-shrink-0"></i><span>Flag discrepancies</span></div>
+                <div class="flex items-center gap-2 text-[11px] text-harvey-subtle"><i data-lucide="circle" class="w-3 h-3 flex-shrink-0"></i><span>Build reconciliation table</span></div>
               </div>
-              <span class="text-zinc-700">Extract agreed positions from <strong>Deal_Terms_Tracker.xlsx</strong></span>
-            </div>
-
-            <div class="flex items-start space-x-3">
-              <div class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                <i data-lucide="check" class="w-3 h-3"></i>
-              </div>
-              <span class="text-zinc-700">Parse the counterparty redline and locate each operative change</span>
-            </div>
-
-            <div class="flex items-start space-x-3">
-              <div class="w-4 h-4 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
-                <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
-              </div>
-              <span class="text-zinc-900 font-semibold">Compare each redline change against the agreed position</span>
-            </div>
-
-            <div class="flex items-start space-x-3">
-              <div class="w-4 h-4 rounded-full border border-zinc-300 flex items-center justify-center shrink-0 mt-0.5"></div>
-              <span class="text-zinc-500">Flag discrepancies and build the reconciliation table</span>
-            </div>
-
-            <div class="flex items-start space-x-3">
-              <div class="w-4 h-4 rounded-full border border-zinc-300 flex items-center justify-center shrink-0 mt-0.5"></div>
-              <span class="text-zinc-500">Generate 3 deliverables &mdash; NorthRiver compliance memo, risk matrix, and citation index</span>
-            </div>
-
-          </div>
-
-          <!-- Outputs File List (Matching Screenshot 2) -->
-          <div class="pt-4 border-t border-zinc-200">
-            <span class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Outputs</span>
-            <div class="space-y-1.5 text-xs text-zinc-800 font-mono">
-              <div class="flex items-center space-x-2">
-                <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-600"></i>
-                <span>NorthRiver_EU_AI_Act_Compliance_Memo.docx</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-emerald-600"></i>
-                <span>AI_Act_Risk_Classification_Matrix.xlsx</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <i data-lucide="file-check" class="w-3.5 h-3.5 text-purple-600"></i>
-                <span>EUR_Lex_Source_Citation_Index.docx</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ========================================================================= -->
-  <!-- 4. FOR LAW FIRMS & FOR IN-HOUSE (Matching Screenshot 3) -->
-  <!-- ========================================================================= -->
-  <section id="solutions" class="max-w-7xl mx-auto px-6 md:px-12 py-16 border-t border-zinc-200">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      
-      <!-- Card 1: For Law Firms (Matching Screenshot 3 Left) -->
-      <div class="bg-[#18181B] text-white rounded-2xl p-8 md:p-10 flex flex-col justify-between shadow-xl">
-        <div class="space-y-4">
-          <h3 class="harvey-serif text-4xl sm:text-5xl font-normal text-white">
-            For Law Firms
-          </h3>
-          <p class="text-sm text-zinc-300 leading-relaxed max-w-md font-light">
-            Run every client matter securely on one platform, with your lawyers and agents working from the same context.
-          </p>
-          <div class="pt-2">
-            <a 
-              href="#studio" 
-              class="inline-block border border-zinc-600 hover:border-white text-white text-xs font-medium px-4 py-2 rounded-lg transition"
-            >
-              Explore DraftMate for Law Firms
-            </a>
-          </div>
-        </div>
-
-        <!-- UI Specimen Snippet (Matching Screenshot 3 Left) -->
-        <div class="mt-8 bg-white text-zinc-900 rounded-xl p-5 shadow-lg space-y-3 text-xs">
-          <div class="flex items-center space-x-2 text-zinc-500 text-[11px] border-b border-zinc-100 pb-2">
-            <span class="w-4 h-4 rounded-full bg-black text-white text-[9px] flex items-center justify-center font-bold">P</span>
-            <span class="font-semibold text-black">Project Titan &mdash; Acme Co</span>
-          </div>
-
-          <div class="flex flex-wrap gap-1.5">
-            <span class="bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded text-[11px] font-medium border border-zinc-200">
-              📄 Acme Co Side Letters
-            </span>
-            <span class="bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded text-[11px] font-medium border border-zinc-200">
-              📄 Acme Co Term Sheet
-            </span>
-          </div>
-
-          <p class="text-zinc-700 bg-zinc-50 p-2.5 rounded border border-zinc-200/60 leading-normal">
-            "Please use <strong>Compare Fund Term Sheet against Side Letter Terms</strong> for the documents attached."
-          </p>
-        </div>
-      </div>
-
-      <!-- Card 2: For In-House (Matching Screenshot 3 Right) -->
-      <div class="bg-[#18181B] text-white rounded-2xl p-8 md:p-10 flex flex-col justify-between shadow-xl">
-        <div class="space-y-4">
-          <h3 class="harvey-serif text-4xl sm:text-5xl font-normal text-white">
-            For In-House
-          </h3>
-          <p class="text-sm text-zinc-300 leading-relaxed max-w-md font-light">
-            Manage your contracts intelligently, optimize external counsel relationships and hand the repetitive work to agents.
-          </p>
-          <div class="pt-2">
-            <a 
-              href="#studio" 
-              class="inline-block border border-zinc-600 hover:border-white text-white text-xs font-medium px-4 py-2 rounded-lg transition"
-            >
-              Explore DraftMate for In-House Teams
-            </a>
-          </div>
-        </div>
-
-        <!-- Table Specimen Snippet (Matching Screenshot 3 Right) -->
-        <div class="mt-8 bg-white text-zinc-900 rounded-xl p-5 shadow-lg space-y-3 text-xs">
-          <div class="flex items-center justify-between border-b border-zinc-100 pb-2">
-            <span class="font-semibold text-black">Contract Intelligence</span>
-            <span class="text-[11px] text-zinc-500">10 contracts auto-reviewed</span>
-          </div>
-
-          <div class="grid grid-cols-2 gap-3 text-center">
-            <div class="bg-zinc-50 p-2 rounded border border-zinc-100">
-              <div class="text-xl font-serif text-black">26</div>
-              <div class="text-[10px] text-zinc-500">Ready to review</div>
-            </div>
-            <div class="bg-zinc-50 p-2 rounded border border-zinc-100">
-              <div class="text-xl font-serif text-black">9</div>
-              <div class="text-[10px] text-zinc-500">Assigned to you</div>
-            </div>
-          </div>
-
-          <div class="space-y-1 text-[11px]">
-            <div class="flex items-center justify-between text-zinc-700 py-0.5">
-              <span>Starlight Holdings MSA.docx</span>
-              <span class="bg-amber-100 text-amber-800 px-1.5 rounded text-[10px] font-semibold">&bull; In progress</span>
-            </div>
-            <div class="flex items-center justify-between text-zinc-700 py-0.5">
-              <span>AstroTech Partnership Agreement.docx</span>
-              <span class="bg-emerald-100 text-emerald-800 px-1.5 rounded text-[10px] font-semibold">&check; Ready</span>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
 
-  <!-- ========================================================================= -->
-  <!-- 5. CENTRAL DRAFTING DOCK & STUDIO (Aligned controls as requested) -->
-  <!-- ========================================================================= -->
-  <section id="studio" class="max-w-7xl mx-auto px-6 md:px-12 py-16 border-t border-zinc-200">
-    
-    <div class="max-w-3xl mb-8 space-y-2">
-      <div class="text-xs uppercase font-mono tracking-wider text-zinc-500 font-semibold">
-        Drafting Studio &bull; Workspace
+  <!-- ================================================================= -->
+  <!-- SOLUTIONS — Dark cards for law firms / in-house (screenshot 3)     -->
+  <!-- ================================================================= -->
+  <section id="solutions" class="max-w-7xl mx-auto px-6 md:px-12 py-20 border-t dm-rule">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <!-- Law Firms card — dark -->
+      <div class="bg-harvey-dark rounded-md p-8 flex flex-col justify-between min-h-[420px] relative overflow-hidden">
+        <!-- Subtle texture -->
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 30% 70%, #fff 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="relative">
+          <h3 class="dm-serif text-3xl font-light text-harvey-darkText mb-3 tracking-tight">For Law Firms</h3>
+          <p class="text-[13px] text-harvey-subtle leading-relaxed max-w-xs">
+            Run every client matter securely on one platform, with lawyers and agents working from a shared context and single source of truth.
+          </p>
+          <button class="mt-6 inline-flex items-center border border-harvey-darkBorder text-harvey-darkText text-[12px] font-medium px-4 py-2 rounded-md hover:bg-white/10 transition-colors duration-150">
+            Explore for Law Firms
+          </button>
+        </div>
+        <!-- Mock UI inside dark card -->
+        <div class="relative mt-8 bg-white rounded-md overflow-hidden shadow-xl border border-white/10">
+          <div class="px-4 py-2.5 border-b border-zinc-100 flex items-center justify-between">
+            <div class="text-[11px] font-medium text-zinc-800">Project Titan — Acme Co</div>
+            <span class="text-[9px] bg-zinc-100 text-zinc-500 px-1.5 py-0.5 rounded font-mono">External</span>
+          </div>
+          <div class="p-4 space-y-2">
+            <div class="flex gap-3 text-[10px] text-zinc-500 border-b border-zinc-100 pb-2 font-medium">
+              <span class="text-zinc-800">Home</span><span>Tasks</span><span>Vault</span><span>Agents</span><span>Library</span>
+            </div>
+            <div class="text-[10px] text-zinc-800 font-medium">Acme Co Side Letters</div>
+            <div class="text-[10px] text-zinc-500">Compare Fund Term Sheet against Side Letter Terms</div>
+            <div class="pt-2 border-t border-zinc-100 text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Vaults</div>
+            <div class="grid grid-cols-3 gap-1.5 text-[9px] text-zinc-600">
+              <div class="border border-zinc-200 rounded p-1.5">Diligence Room</div>
+              <div class="border border-zinc-200 rounded p-1.5">Vendor Contracts</div>
+              <div class="border border-zinc-200 rounded p-1.5">Acquisition Agmt.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <h2 class="harvey-serif text-4xl sm:text-5xl font-normal text-black">
-        Synthesize, Review & Verify
+
+      <!-- In-House card — dark -->
+      <div class="bg-harvey-dark rounded-md p-8 flex flex-col justify-between min-h-[420px] relative overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 70% 30%, #fff 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="relative">
+          <h3 class="dm-serif text-3xl font-light text-harvey-darkText mb-3 tracking-tight">For In-House</h3>
+          <p class="text-[13px] text-harvey-subtle leading-relaxed max-w-xs">
+            Manage contracts intelligently, optimise external counsel relationships, and delegate repetitive work to agents that never miss a deadline.
+          </p>
+          <button class="mt-6 inline-flex items-center border border-harvey-darkBorder text-harvey-darkText text-[12px] font-medium px-4 py-2 rounded-md hover:bg-white/10 transition-colors duration-150">
+            Explore for In-House Teams
+          </button>
+        </div>
+        <!-- Mock contract intelligence UI -->
+        <div class="relative mt-8 bg-white rounded-md overflow-hidden shadow-xl border border-white/10">
+          <div class="px-4 py-2.5 border-b border-zinc-100">
+            <div class="text-[11px] font-medium text-zinc-800">Contract Intelligence</div>
+            <div class="text-[10px] text-zinc-500">Harvey auto-reviewed 10 contracts since your last visit.</div>
+          </div>
+          <div class="p-3 space-y-1.5">
+            <div class="flex gap-6 text-[10px] text-zinc-800 border-b border-zinc-100 pb-2">
+              <div><div class="text-xl font-semibold">26</div><div class="text-zinc-500">Ready to review</div></div>
+              <div><div class="text-xl font-semibold">9</div><div class="text-zinc-500">Assigned to you</div></div>
+            </div>
+            <div class="text-[9px] text-zinc-500 uppercase font-semibold tracking-wider pt-1">My reviews</div>
+            <div class="space-y-1 text-[10px]">
+              <div class="flex justify-between py-1 border-b border-zinc-50"><span class="text-zinc-800 truncate max-w-[150px]">Starlight Holdings MSA.docx</span><span class="text-amber-600 text-[9px]">in progress</span></div>
+              <div class="flex justify-between py-1 border-b border-zinc-50"><span class="text-zinc-800 truncate max-w-[150px]">AstroTech Partnership Agmt.docx</span><span class="text-amber-600 text-[9px]">in progress</span></div>
+              <div class="flex justify-between py-1"><span class="text-zinc-800 truncate max-w-[150px]">Meridian SOW G3 Services.docx</span><span class="text-green-700 text-[9px]">ready</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================================= -->
+  <!-- AUTHORITY PANEL — dedicated section (fixes dead nav link)          -->
+  <!-- ================================================================= -->
+  <section id="authority" class="max-w-7xl mx-auto px-6 md:px-12 py-20 border-t dm-rule">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="text-[11px] font-mono uppercase tracking-widest text-harvey-muted mb-4">Citation & Authority</div>
+        <h2 class="dm-serif text-4xl font-light text-harvey-ink mb-5 tracking-tight leading-tight">
+          No fabricated precedents.<br>Ever.
+        </h2>
+        <p class="text-[14px] text-harvey-inkMuted leading-relaxed mb-6">
+          Every citation generated by DraftMate is cross-referenced against a curated database of verified statutes, court precedents, and official gazettes. Citations carry explicit status flags — <strong class="font-medium text-harvey-ink">Verified</strong>, <strong class="font-medium text-harvey-amber">Partially Verified</strong>, or <strong class="font-medium text-harvey-red">Flagged</strong> — and the system refuses to hallucinate.
+        </p>
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="inline-flex items-center gap-1.5 text-[12px] font-medium text-harvey-green border border-harvey-greenBorder bg-harvey-greenBg px-3 py-1.5 rounded-sm">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Verified
+          </span>
+          <span class="inline-flex items-center gap-1.5 text-[12px] font-medium text-harvey-amber border border-harvey-amberBorder bg-harvey-amberBg px-3 py-1.5 rounded-sm">
+            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Partially Verified
+          </span>
+          <span class="inline-flex items-center gap-1.5 text-[12px] font-medium text-harvey-red border border-harvey-redBorder bg-harvey-redBg px-3 py-1.5 rounded-sm">
+            <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Flagged
+          </span>
+        </div>
+      </div>
+
+      <!-- Authority stats table -->
+      <div class="bg-harvey-white rounded-md border border-harvey-rule overflow-hidden">
+        <div class="px-5 py-3 border-b border-harvey-rule bg-harvey-bg">
+          <div class="text-[11px] font-mono text-harvey-muted uppercase tracking-wider">Authority Index — Verified Sources</div>
+        </div>
+        <table class="w-full text-[12px]">
+          <thead>
+            <tr class="border-b border-harvey-rule text-harvey-muted text-left">
+              <th class="px-5 py-2.5 font-medium">Source</th>
+              <th class="px-4 py-2.5 font-medium">Jurisdiction</th>
+              <th class="px-4 py-2.5 font-medium text-right">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-harvey-rule">
+            <tr class="hover:bg-harvey-bg transition-colors">
+              <td class="px-5 py-3 text-harvey-inkMuted font-medium">Indian Contract Act, 1872</td>
+              <td class="px-4 py-3 text-harvey-muted">India</td>
+              <td class="px-4 py-3 text-right"><span class="badge-verified text-[10px] font-mono px-1.5 py-0.5 rounded border">VERIFIED</span></td>
+            </tr>
+            <tr class="hover:bg-harvey-bg transition-colors">
+              <td class="px-5 py-3 text-harvey-inkMuted font-medium">Companies Act, 2013</td>
+              <td class="px-4 py-3 text-harvey-muted">India</td>
+              <td class="px-4 py-3 text-right"><span class="badge-verified text-[10px] font-mono px-1.5 py-0.5 rounded border">VERIFIED</span></td>
+            </tr>
+            <tr class="hover:bg-harvey-bg transition-colors">
+              <td class="px-5 py-3 text-harvey-inkMuted font-medium">Information Technology Act, 2000</td>
+              <td class="px-4 py-3 text-harvey-muted">India</td>
+              <td class="px-4 py-3 text-right"><span class="badge-verified text-[10px] font-mono px-1.5 py-0.5 rounded border">VERIFIED</span></td>
+            </tr>
+            <tr class="hover:bg-harvey-bg transition-colors">
+              <td class="px-5 py-3 text-harvey-inkMuted font-medium">Arbitration & Conciliation Act</td>
+              <td class="px-4 py-3 text-harvey-muted">India</td>
+              <td class="px-4 py-3 text-right"><span class="badge-partial text-[10px] font-mono px-1.5 py-0.5 rounded border">PARTIAL</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================================= -->
+  <!-- DRAFTING STUDIO — aligned dock (File + Voice + Generate same row)  -->
+  <!-- ================================================================= -->
+  <section id="studio" class="max-w-7xl mx-auto px-6 md:px-12 py-20 border-t dm-rule">
+
+    <div class="max-w-2xl mb-10">
+      <div class="text-[11px] font-mono uppercase tracking-widest text-harvey-muted mb-3">Drafting Studio</div>
+      <h2 class="dm-serif text-4xl md:text-5xl font-light text-harvey-ink tracking-tight leading-tight mb-3">
+        Synthesize. Review. Verify.
       </h2>
-      <p class="text-sm text-zinc-600">
-        Input instructions, attach reference files via Microsoft MarkItDown, or invoke specialized workflows.
+      <p class="text-[13px] text-harvey-inkMuted leading-relaxed">
+        Attach reference files, invoke a specialised workflow, dictate instructions by voice, or write directly. The studio handles MarkItDown parsing, style adaptation, and citation auditing automatically.
       </p>
     </div>
 
-    <!-- 5 Workflow Buttons with Rounded Corners -->
-    <div class="flex flex-wrap gap-2 mb-4 text-xs">
-      <button onclick="setWorkflow('@ContractDrafting', 'Contract Drafting')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
-        @ContractDrafting
+    <!-- Workflow chips — restrained, no emoji -->
+    <div class="flex flex-wrap gap-1.5 mb-5">
+      <button onclick="setWorkflow('@ContractDrafting', 'Contract Drafting')"
+        class="workflow-chip text-[12px] font-medium bg-harvey-white border border-harvey-rule text-harvey-inkMuted hover:border-harvey-ink hover:text-harvey-ink px-3 py-1.5 rounded-sm transition-colors duration-150">
+        Contract Drafting
       </button>
-      <button onclick="setWorkflow('@LegalNotice', 'Legal Notice')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
-        @LegalNotice
+      <button onclick="setWorkflow('@LegalNotice', 'Legal Notice')"
+        class="workflow-chip text-[12px] font-medium bg-harvey-white border border-harvey-rule text-harvey-inkMuted hover:border-harvey-ink hover:text-harvey-ink px-3 py-1.5 rounded-sm transition-colors duration-150">
+        Legal Notice
       </button>
-      <button onclick="setWorkflow('@PetitionDrafting', 'Court Petition')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
-        @PetitionDrafting
+      <button onclick="setWorkflow('@PetitionDrafting', 'Court Petition')"
+        class="workflow-chip text-[12px] font-medium bg-harvey-white border border-harvey-rule text-harvey-inkMuted hover:border-harvey-ink hover:text-harvey-ink px-3 py-1.5 rounded-sm transition-colors duration-150">
+        Petition Drafting
       </button>
-      <button onclick="setWorkflow('@ContractReview', 'Review & Redline')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
-        @ContractReview
+      <button onclick="setWorkflow('@ContractReview', 'Review & Redline')"
+        class="workflow-chip text-[12px] font-medium bg-harvey-white border border-harvey-rule text-harvey-inkMuted hover:border-harvey-ink hover:text-harvey-ink px-3 py-1.5 rounded-sm transition-colors duration-150">
+        Review & Redline
       </button>
-      <button onclick="setWorkflow('@CaseLawResearch', 'Legal Research')" class="workflow-chip bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg font-medium transition border border-transparent">
-        @CaseLawResearch
+      <button onclick="setWorkflow('@CaseLawResearch', 'Legal Research')"
+        class="workflow-chip text-[12px] font-medium bg-harvey-white border border-harvey-rule text-harvey-inkMuted hover:border-harvey-ink hover:text-harvey-ink px-3 py-1.5 rounded-sm transition-colors duration-150">
+        Case Law Research
       </button>
     </div>
 
-    <!-- The Aligned Input Dock (File Upload, Voice, Text, Generate on same bar) -->
-    <div class="bg-white border border-zinc-300 rounded-2xl shadow-md p-4 md:p-6 transition-all focus-within:border-black focus-within:ring-1 focus-within:ring-black">
-      
-      <!-- Context Attachment Chips -->
-      <div id="attachedTagsContainer" class="flex flex-wrap gap-2 mb-3"></div>
+    <!-- Input dock — File + Voice + Prompt + Draft on same card -->
+    <div class="bg-harvey-white border border-harvey-border rounded-md shadow-sm focus-within:border-harvey-ink transition-colors duration-200">
 
-      <!-- Textarea Console -->
-      <textarea 
-        id="promptInput" 
-        rows="3" 
-        placeholder="Ask anything, draft an agreement, or type @ to invoke a specific legal skill (e.g. 'Draft a Mutual NDA under Indian law' or '@ContractReview on attached agreement')..."
-        class="w-full bg-transparent resize-none border-0 text-zinc-900 text-sm sm:text-base placeholder:text-zinc-400 leading-relaxed outline-none"
+      <!-- Context tags row -->
+      <div id="attachedTagsContainer" class="flex flex-wrap gap-1.5 px-5 pt-4 empty:hidden"></div>
+
+      <!-- Textarea -->
+      <textarea
+        id="promptInput"
+        rows="4"
+        placeholder="Draft a mutual NDA under Indian law, or type @ to invoke a workflow (e.g. @ContractDrafting) — attach reference files to adapt style..."
+        class="w-full bg-transparent resize-none border-0 text-harvey-ink text-[14px] placeholder:text-harvey-subtle leading-relaxed px-5 py-4 font-sans"
       ></textarea>
 
-      <!-- Horizontally Aligned Controls Bar (Attach File + Voice Input + Generate Button) -->
-      <div class="pt-4 mt-2 border-t border-zinc-100 flex flex-wrap items-center justify-between gap-3 text-xs">
-        
-        <!-- Left Group: Upload File + Voice Dictation + Style Switch -->
-        <div class="flex items-center space-x-2.5 text-zinc-600">
-          
-          <!-- Upload Button (Microsoft MarkItDown) -->
-          <label class="cursor-pointer inline-flex items-center space-x-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg transition font-medium">
-            <i data-lucide="paperclip" class="w-3.5 h-3.5 text-zinc-600"></i>
-            <span>Attach File</span>
+      <!-- Bottom bar: left controls + right generate button — all on same row -->
+      <div class="px-4 pb-3 flex flex-wrap items-center justify-between gap-2 border-t border-harvey-rule mt-1 pt-3">
+
+        <!-- Left: attach + voice + style toggle -->
+        <div class="flex items-center gap-2">
+
+          <!-- File attach -->
+          <label class="cursor-pointer inline-flex items-center gap-1.5 text-[12px] font-medium text-harvey-muted hover:text-harvey-ink bg-harvey-bg border border-harvey-rule px-3 py-1.5 rounded-sm transition-colors duration-150">
+            <i data-lucide="paperclip" class="w-3.5 h-3.5"></i>
+            <span>Attach</span>
             <input type="file" id="fileUploadInput" onchange="handleFileUpload(event)" class="hidden" accept=".pdf,.docx,.doc,.txt,.md">
           </label>
 
-          <!-- Voice Input Button -->
-          <button 
-            onclick="openVoiceModal()" 
-            class="inline-flex items-center space-x-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3 py-1.5 rounded-lg transition font-medium"
-            title="Spoken Dictation & Commands"
-          >
-            <i data-lucide="mic" class="w-3.5 h-3.5 text-zinc-600"></i>
-            <span>Voice Input</span>
+          <!-- Voice dictation -->
+          <button onclick="openVoiceModal()"
+            class="inline-flex items-center gap-1.5 text-[12px] font-medium text-harvey-muted hover:text-harvey-ink bg-harvey-bg border border-harvey-rule px-3 py-1.5 rounded-sm transition-colors duration-150">
+            <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+            <span>Voice</span>
           </button>
 
-          <!-- Reference Style Adaptation Switch -->
-          <label class="hidden sm:inline-flex items-center space-x-1.5 cursor-pointer text-zinc-600 hover:text-black">
-            <input type="checkbox" id="learnStyleToggle" class="rounded text-black focus:ring-0">
-            <span class="text-[11px]">Adapt Reference Style</span>
+          <!-- Style toggle -->
+          <label class="hidden sm:inline-flex items-center gap-1.5 cursor-pointer text-[12px] text-harvey-muted hover:text-harvey-ink transition-colors duration-150">
+            <input type="checkbox" id="learnStyleToggle" class="rounded-sm accent-harvey-ink w-3.5 h-3.5">
+            <span>Adapt reference style</span>
           </label>
 
+          <!-- Model selector -->
+          <div class="relative">
+            <button id="modelSelectBtn" onclick="toggleModelDropdown()"
+              class="inline-flex items-center gap-1.5 text-[12px] font-medium text-harvey-muted hover:text-harvey-ink bg-harvey-bg border border-harvey-rule px-3 py-1.5 rounded-sm transition-colors duration-150">
+              <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+              <span id="activeModelLabel">Claude 3.5 Sonnet</span>
+              <i data-lucide="chevron-down" class="w-3 h-3"></i>
+            </button>
+            <div id="modelDropdown" class="hidden absolute bottom-full mb-1 left-0 bg-harvey-white border border-harvey-border rounded-md shadow-lg z-30 min-w-[220px] py-1">
+              <div id="modelOptionsList" class="divide-y divide-harvey-rule"></div>
+            </div>
+          </div>
         </div>
 
-        <!-- Right Group: Generate Button Aligned on the exact same row -->
-        <div class="flex items-center space-x-3">
-          <button 
-            id="sendDraftBtn" 
-            onclick="executeDrafting()" 
-            class="inline-flex items-center space-x-2 bg-black hover:bg-zinc-800 text-white text-xs font-medium px-5 py-2.5 rounded-lg transition-all shadow-xs active:scale-95 disabled:opacity-50"
-          >
-            <span>Draft Instrument</span>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-          </button>
-        </div>
+        <!-- Right: Draft button — solid black, same row -->
+        <button id="sendDraftBtn" onclick="executeDrafting()"
+          class="inline-flex items-center gap-2 bg-harvey-ink hover:bg-harvey-dark text-harvey-bg text-[13px] font-medium px-5 py-2 rounded-sm transition-colors duration-150 disabled:opacity-40">
+          <span>Draft Instrument</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
 
       </div>
-
     </div>
 
-    <!-- Studio Output Area (Document Viewer | Citations | Redline) -->
-    <div id="studioOutputContainer" class="hidden mt-8 bg-white border border-zinc-200 rounded-2xl shadow-xl overflow-hidden">
-      
-      <!-- Studio Tabs Bar -->
-      <div class="bg-zinc-50 border-b border-zinc-200 px-6 py-3 flex flex-wrap items-center justify-between gap-4">
-        
-        <div class="flex items-center space-x-2">
-          <button onclick="switchStudioTab('draft')" id="tabDraftBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-black border border-zinc-200 shadow-xs">
+    <!-- Studio output panel (hidden until draft is generated) -->
+    <div id="studioOutputContainer" class="hidden mt-6 bg-harvey-white border border-harvey-rule rounded-md overflow-hidden">
+
+      <!-- Tabs bar -->
+      <div class="bg-harvey-bg border-b border-harvey-rule px-5 py-2.5 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-1">
+          <button onclick="switchStudioTab('draft')" id="tabDraftBtn"
+            class="px-3.5 py-1.5 rounded-sm text-[12px] font-medium bg-harvey-white text-harvey-ink border border-harvey-rule transition-colors">
             Legal Instrument
           </button>
-          <button onclick="switchStudioTab('citations')" id="tabCitationsBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:text-black transition">
+          <button onclick="switchStudioTab('citations')" id="tabCitationsBtn"
+            class="px-3.5 py-1.5 rounded-sm text-[12px] font-medium text-harvey-muted hover:text-harvey-ink transition-colors">
             Citation Authority
-            <span id="citationCountBadge" class="ml-1 bg-zinc-200 text-black text-[10px] px-1.5 py-0.2 rounded-full font-mono">0</span>
+            <span id="citationCountBadge" class="ml-1 bg-harvey-rule text-harvey-inkMuted text-[10px] px-1.5 py-0.5 rounded font-mono">0</span>
           </button>
-          <button onclick="switchStudioTab('redline')" id="tabRedlineBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:text-black transition">
+          <button onclick="switchStudioTab('redline')" id="tabRedlineBtn"
+            class="px-3.5 py-1.5 rounded-sm text-[12px] font-medium text-harvey-muted hover:text-harvey-ink transition-colors">
             Redline Audit
           </button>
         </div>
 
-        <div class="flex items-center space-x-3 text-xs">
-          <!-- Headroom Token Telemetry -->
-          <div id="headroomSavingsBadge" class="hidden items-center space-x-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium">
+        <div class="flex items-center gap-2 text-[11px]">
+          <!-- Headroom badge -->
+          <div id="headroomSavingsBadge" class="hidden items-center gap-1.5 bg-harvey-greenBg border border-harvey-greenBorder text-harvey-green px-2.5 py-1 rounded-sm font-mono font-medium">
+            <i data-lucide="zap" class="w-3 h-3"></i>
             <span id="headroomSavingsText">Headroom: 42% saved</span>
           </div>
-
-          <!-- Export Buttons -->
-          <button onclick="exportMarkdown()" class="border border-zinc-200 bg-white hover:bg-zinc-50 text-black px-2.5 py-1 rounded-md text-[11px]">
-            Markdown (.md)
-          </button>
-          <button onclick="exportDocx()" class="border border-zinc-200 bg-white hover:bg-zinc-50 text-black px-2.5 py-1 rounded-md text-[11px]">
-            Word (.doc)
-          </button>
-          <button onclick="copyDraftText()" class="border border-zinc-200 bg-white hover:bg-zinc-50 text-black px-2.5 py-1 rounded-md text-[11px]">
-            Copy Text
-          </button>
+          <!-- Export -->
+          <button onclick="exportMarkdown()" class="border border-harvey-rule bg-harvey-bg hover:bg-harvey-white text-harvey-inkMuted hover:text-harvey-ink px-2.5 py-1 rounded-sm text-[11px] transition-colors">Markdown</button>
+          <button onclick="exportDocx()" class="border border-harvey-rule bg-harvey-bg hover:bg-harvey-white text-harvey-inkMuted hover:text-harvey-ink px-2.5 py-1 rounded-sm text-[11px] transition-colors">Word</button>
+          <button onclick="copyDraftText()" class="border border-harvey-rule bg-harvey-bg hover:bg-harvey-white text-harvey-inkMuted hover:text-harvey-ink px-2.5 py-1 rounded-sm text-[11px] transition-colors">Copy</button>
         </div>
-
       </div>
 
-      <!-- Studio Tab 1: Formatted Document -->
-      <div id="tabContentDraft" class="p-8 md:p-12 overflow-y-auto max-h-[650px] leading-relaxed text-sm select-text bg-white">
-        <div id="renderedDraftView" class="max-w-3xl mx-auto space-y-4"></div>
+      <!-- Tab 1: Document -->
+      <div id="tabContentDraft" class="p-8 md:p-12 overflow-y-auto max-h-[650px] bg-harvey-white">
+        <div id="renderedDraftView" class="max-w-3xl mx-auto space-y-4 text-[14px] leading-relaxed"></div>
       </div>
 
-      <!-- Studio Tab 2: Citation Verification Desk -->
-      <div id="tabContentCitations" class="hidden p-8 overflow-y-auto max-h-[650px] space-y-4 bg-zinc-50">
-        <div id="citationSummaryHeader" class="p-5 bg-white border border-zinc-200 rounded-xl flex items-center justify-between"></div>
-        <div id="citationCardsList" class="space-y-3"></div>
+      <!-- Tab 2: Citations -->
+      <div id="tabContentCitations" class="hidden p-6 overflow-y-auto max-h-[650px] space-y-4 bg-harvey-bg">
+        <div id="citationSummaryHeader" class="p-5 bg-harvey-white border border-harvey-rule rounded-sm flex flex-wrap items-center justify-between gap-4"></div>
+        <div id="citationCardsList" class="space-y-2.5"></div>
       </div>
 
-      <!-- Studio Tab 3: Redline Diff Viewer -->
-      <div id="tabContentRedline" class="hidden p-8 overflow-y-auto max-h-[650px] space-y-4 bg-zinc-50">
-        <div class="flex items-center justify-between text-xs text-zinc-600 pb-2 border-b border-zinc-200">
-          <span>Redline Markup: Red = Deleted text &bull; Green = Proposed covenants</span>
-          <button onclick="applyRedlinesNotice()" class="bg-black text-white px-3 py-1 rounded-md text-xs font-semibold">
-            Incorporate All Redlines
-          </button>
+      <!-- Tab 3: Redline -->
+      <div id="tabContentRedline" class="hidden p-6 overflow-y-auto max-h-[650px] space-y-3 bg-harvey-bg">
+        <div class="flex items-center justify-between text-[12px] text-harvey-muted pb-3 border-b border-harvey-rule">
+          <span>Redline markup &mdash; <span class="text-harvey-green font-medium">green</span> = addition, <span class="text-harvey-red font-medium">red</span> = deletion</span>
+          <button onclick="applyRedlinesNotice()" class="bg-harvey-ink text-harvey-bg px-3 py-1.5 rounded-sm text-[11px] font-medium hover:bg-harvey-dark transition-colors">Lock All Redlines</button>
         </div>
-        <div id="redlineLinesContainer" class="p-4 bg-white border border-zinc-200 rounded-xl font-mono text-xs space-y-1 overflow-x-auto"></div>
+        <div id="redlineLinesContainer" class="p-4 bg-harvey-white border border-harvey-rule rounded-sm font-mono text-[12px] space-y-1 overflow-x-auto"></div>
       </div>
-
     </div>
 
   </section>
 
 
-  <!-- ========================================================================= -->
-  <!-- 6. MINIMALIST FOOTER -->
-  <!-- ========================================================================= -->
-  <footer class="max-w-7xl mx-auto px-6 md:px-12 py-12 text-zinc-500 text-xs border-t border-zinc-200">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center space-x-2">
-        <span class="font-serif text-lg font-semibold text-black">DraftMate</span>
-        <span>&bull;</span>
-        <span>Kodekurrent Season 2 Hackathon (RGIPT)</span>
+  <!-- ================================================================= -->
+  <!-- FOOTER — clean, restrained                                         -->
+  <!-- ================================================================= -->
+  <footer class="border-t dm-rule">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-[12px] text-harvey-muted">
+      <div class="flex items-center gap-3">
+        <span class="dm-serif text-base font-medium text-harvey-ink">DraftMate</span>
+        <span class="text-harvey-rule">|</span>
+        <span>Kodekurrent Season 2 &bull; RGIPT</span>
       </div>
-      <div class="flex space-x-6 text-zinc-600 font-medium">
-        <a href="#agents" class="hover:text-black">Agents</a>
-        <a href="#studio" class="hover:text-black">Studio</a>
-        <a href="/docs" target="_blank" class="hover:text-black">API Docs</a>
+      <div class="flex items-center gap-6 font-medium">
+        <a href="#agents" class="hover:text-harvey-ink transition-colors">Agents</a>
+        <a href="#studio" class="hover:text-harvey-ink transition-colors">Studio</a>
+        <a href="#authority" class="hover:text-harvey-ink transition-colors">Authority</a>
+        <a href="/docs" target="_blank" class="hover:text-harvey-ink transition-colors">API Docs</a>
       </div>
     </div>
   </footer>
 
 
-  <!-- ========================================================================= -->
-  <!-- 7. CONSULT HIGURUMA COMPANION (Harvey Minimalist Style) -->
-  <!-- ========================================================================= -->
+  <!-- ================================================================= -->
+  <!-- HIGURUMA DOCK WIDGET — no emoji on button, scales SVG animation    -->
+  <!-- ================================================================= -->
+  <div id="higurumaDockWidget" onclick="toggleHigurumaChamber()"
+    class="fixed bottom-6 right-6 z-40 bg-harvey-ink text-harvey-bg border border-harvey-darkBorder p-3 rounded-md shadow-xl cursor-pointer hover:bg-harvey-dark transition-all duration-200 flex items-center gap-3 group">
 
-  <!-- Floating Dock Summoner (Bottom-Right) -->
-  <div 
-    id="higurumaDockWidget"
-    onclick="toggleHigurumaChamber()" 
-    class="fixed bottom-6 right-6 z-40 bg-black text-white border border-zinc-800 p-3 rounded-xl shadow-2xl cursor-pointer hover:bg-zinc-900 transition-all flex items-center space-x-3 group"
-  >
-    <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-sm">
-      ⚖️
+    <!-- Animated scales SVG -->
+    <div class="w-8 h-8 rounded-sm bg-white/10 flex items-center justify-center flex-shrink-0">
+      <svg class="scales-animate w-5 h-5 text-harvey-bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v18M5 6l7-3 7 3M5 18H2l3-9M19 18h3l-3-9M2 18h20"/>
+      </svg>
     </div>
-    <div class="pr-2">
-      <div class="flex items-center space-x-1.5">
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span class="font-medium text-xs text-white">Hiromi Higuruma</span>
-      </div>
-      <div class="text-[10px] text-zinc-400 font-mono">Defense Counsel</div>
+
+    <div>
+      <div class="text-[12px] font-medium text-white leading-tight">Hiromi Higuruma</div>
+      <div class="text-[10px] text-harvey-subtle font-mono">Defense Counsel</div>
     </div>
-    <div class="text-zinc-400 group-hover:translate-x-0.5 transition-transform text-xs">
-      &rarr;
-    </div>
+
+    <div class="text-harvey-subtle group-hover:translate-x-0.5 transition-transform text-xs ml-1">&rarr;</div>
   </div>
 
-  <!-- Slide-Over Drawer -->
-  <aside 
-    id="higurumaChamberDrawer" 
-    class="hidden fixed inset-y-0 right-0 w-full max-w-lg bg-white text-zinc-900 border-l border-zinc-200 z-50 flex flex-col shadow-2xl transition-all"
-  >
-    <!-- Header -->
-    <div class="p-6 bg-zinc-50 border-b border-zinc-200 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center text-lg">
-          ⚖️
-        </div>
+
+  <!-- ================================================================= -->
+  <!-- HIGURUMA CHAMBER DRAWER — de-slopped, editorial serif typography   -->
+  <!-- ================================================================= -->
+  <aside id="higurumaChamberDrawer"
+    class="fixed inset-y-0 right-0 w-full max-w-md bg-harvey-white text-harvey-ink border-l border-harvey-rule z-50 flex flex-col shadow-2xl">
+
+    <!-- Header — dark bar, editorial -->
+    <div class="px-6 py-5 bg-harvey-ink flex items-center justify-between flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-harvey-bg opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v18M5 6l7-3 7 3M5 18H2l3-9M19 18h3l-3-9M2 18h20"/>
+        </svg>
         <div>
-          <h3 class="font-serif text-lg font-semibold text-black">Chamber of Hiromi Higuruma</h3>
-          <p class="text-xs text-zinc-500 font-mono">Defense Counsel &bull; Deadly Sentencing (誅伏賜死)</p>
+          <h3 class="dm-serif text-lg font-light text-harvey-bg tracking-tight">Chamber of Hiromi Higuruma</h3>
+          <p class="text-[10px] font-mono text-harvey-subtle mt-0.5">Defense Counsel &bull; 誅伏賜死</p>
         </div>
       </div>
-      <button onclick="toggleHigurumaChamber()" class="text-zinc-400 hover:text-black p-1">
-        <i data-lucide="x" class="w-5 h-5"></i>
+      <button onclick="toggleHigurumaChamber()" class="text-harvey-subtle hover:text-harvey-bg transition-colors p-1">
+        <i data-lucide="x" class="w-4 h-4"></i>
       </button>
     </div>
 
-    <!-- Motto -->
-    <div class="px-6 py-3 bg-zinc-100 border-b border-zinc-200 text-xs text-zinc-600 italic">
-      "The law is not a tool to blind people; it is a scale that must balance truth with evidence."
+    <!-- Motto — italic serif, restrained -->
+    <div class="px-6 py-3.5 border-b border-harvey-rule bg-harvey-bg">
+      <p class="dm-serif text-[13px] text-harvey-inkMuted italic leading-snug">
+        &ldquo;The law is not a tool to blind people; it is a scale that must balance truth with evidence.&rdquo;
+      </p>
     </div>
 
-    <!-- Quick Inquiries -->
-    <div class="p-4 bg-white border-b border-zinc-200 space-y-2 text-xs">
-      <div class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">Tactical Inquiries</div>
+    <!-- Quick prompts — no emoji, SVG icons only -->
+    <div class="px-5 py-4 border-b border-harvey-rule bg-harvey-bg flex-shrink-0">
+      <div class="text-[10px] font-mono font-semibold text-harvey-muted uppercase tracking-widest mb-3">Tactical Inquiries</div>
       <div class="grid grid-cols-2 gap-2">
-        <button onclick="askHigurumaQuick('Cross-Examine Active Draft for loopholes')" class="bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 p-2 rounded-lg text-left text-zinc-800 transition">
-          ⚖️ Cross-Examine Draft
+        <button onclick="askHigurumaQuick('Cross-examine the active draft for contractual loopholes')"
+          class="bg-harvey-white border border-harvey-rule hover:border-harvey-ink text-left p-3 rounded-sm transition-colors duration-150 group">
+          <div class="flex items-center gap-1.5 mb-1">
+            <i data-lucide="search" class="w-3 h-3 text-harvey-muted group-hover:text-harvey-ink transition-colors"></i>
+            <span class="text-[11px] font-semibold text-harvey-ink">Cross-Examine</span>
+          </div>
+          <p class="text-[10px] text-harvey-muted leading-tight">Identify loopholes in active draft</p>
         </button>
-        <button onclick="askHigurumaQuick('Scrutinize Indemnity & Liability limits')" class="bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 p-2 rounded-lg text-left text-zinc-800 transition">
-          🔍 Scrutinize Liability
+        <button onclick="askHigurumaQuick('Scrutinise the indemnity and liability limits for risk exposure')"
+          class="bg-harvey-white border border-harvey-rule hover:border-harvey-ink text-left p-3 rounded-sm transition-colors duration-150 group">
+          <div class="flex items-center gap-1.5 mb-1">
+            <i data-lucide="shield" class="w-3 h-3 text-harvey-muted group-hover:text-harvey-ink transition-colors"></i>
+            <span class="text-[11px] font-semibold text-harvey-ink">Scrutinise Liability</span>
+          </div>
+          <p class="text-[10px] text-harvey-muted leading-tight">Indemnity &amp; exposure audit</p>
         </button>
-        <button onclick="askHigurumaQuick('How do we defend against a breach of contract claim?')" class="bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 p-2 rounded-lg text-left text-zinc-800 transition">
-          🛡️ Breach Defense
+        <button onclick="askHigurumaQuick('How do we defend against a breach of contract claim?')"
+          class="bg-harvey-white border border-harvey-rule hover:border-harvey-ink text-left p-3 rounded-sm transition-colors duration-150 group">
+          <div class="flex items-center gap-1.5 mb-1">
+            <i data-lucide="gavel" class="w-3 h-3 text-harvey-muted group-hover:text-harvey-ink transition-colors"></i>
+            <span class="text-[11px] font-semibold text-harvey-ink">Breach Defense</span>
+          </div>
+          <p class="text-[10px] text-harvey-muted leading-tight">Countermeasure strategy</p>
         </button>
-        <button onclick="askHigurumaQuick('What does Judgeman think of this legal balance?')" class="bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 p-2 rounded-lg text-left text-zinc-800 transition">
-          🏛️ Legal Philosophy
+        <button onclick="askHigurumaQuick('What is the legal philosophy behind Judgeman domain — Deadly Sentencing?')"
+          class="bg-harvey-white border border-harvey-rule hover:border-harvey-ink text-left p-3 rounded-sm transition-colors duration-150 group">
+          <div class="flex items-center gap-1.5 mb-1">
+            <i data-lucide="scale" class="w-3 h-3 text-harvey-muted group-hover:text-harvey-ink transition-colors"></i>
+            <span class="text-[11px] font-semibold text-harvey-ink">Legal Philosophy</span>
+          </div>
+          <p class="text-[10px] text-harvey-muted leading-tight">Judgeman domain insight</p>
         </button>
       </div>
     </div>
 
-    <!-- Chat Thread -->
-    <div id="higurumaChatThread" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs select-text bg-zinc-50/50">
-      <div class="bg-white border border-zinc-200 p-4 rounded-xl space-y-2 shadow-2xs">
-        <div class="flex items-center space-x-1.5 font-semibold text-black">
-          <span>⚖️</span>
-          <span>Hiromi Higuruma:</span>
+    <!-- Chat thread -->
+    <div id="higurumaChatThread" class="flex-1 overflow-y-auto px-5 py-5 space-y-4 bg-harvey-bg">
+      <!-- Initial message from Higuruma -->
+      <div class="bg-harvey-white border border-harvey-rule rounded-sm p-4 space-y-2">
+        <div class="flex items-center gap-2 border-b border-harvey-rule pb-2">
+          <svg class="w-3.5 h-3.5 text-harvey-inkMuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 6l7-3 7 3M5 18H2l3-9M19 18h3l-3-9M2 18h20"/></svg>
+          <span class="dm-serif text-[13px] font-medium text-harvey-ink">Hiromi Higuruma</span>
+          <span class="text-[9px] font-mono text-harvey-muted ml-auto">日車寛見</span>
         </div>
-        <p class="text-zinc-700 leading-relaxed">
-          I am listening. Whether you need to cross-examine a counterparty's clause, identify hidden liabilities in an indemnity provision, or formulate an ironclad courtroom defense—tell me what evidence or draft we are dealing with.
+        <p class="text-[12px] text-harvey-inkMuted leading-relaxed">
+          I am listening. Whether you need to cross-examine a counterparty's clause, identify hidden liabilities in an indemnity provision, or formulate a courtroom defense — tell me what evidence or draft we are dealing with.
         </p>
       </div>
     </div>
 
-    <!-- Chat Input -->
-    <div class="p-4 bg-white border-t border-zinc-200">
-      <form onsubmit="sendHigurumaMessage(event)" class="flex space-x-2">
-        <input 
-          type="text" 
-          id="higurumaMessageInput" 
-          placeholder="Consult Higuruma on clause vulnerabilities, strategy..."
-          class="flex-1 bg-zinc-50 border border-zinc-200 focus:border-black rounded-lg px-3.5 py-2.5 text-xs text-zinc-900 outline-none"
+    <!-- Chat input -->
+    <div class="px-4 py-4 border-t border-harvey-rule bg-harvey-white flex-shrink-0">
+      <form onsubmit="sendHigurumaMessage(event)" class="flex gap-2">
+        <input
+          type="text"
+          id="higurumaMessageInput"
+          placeholder="Consult on clause vulnerabilities, strategy, case law..."
+          class="flex-1 bg-harvey-bg border border-harvey-rule focus:border-harvey-ink rounded-sm px-3.5 py-2.5 text-[12px] text-harvey-ink placeholder:text-harvey-subtle transition-colors outline-none font-sans"
         >
-        <button 
-          type="submit" 
-          class="bg-black hover:bg-zinc-800 text-white px-4 py-2.5 rounded-lg font-medium text-xs transition"
-        >
+        <button type="submit"
+          class="bg-harvey-ink hover:bg-harvey-dark text-harvey-bg px-4 py-2.5 rounded-sm font-medium text-[12px] transition-colors duration-150">
           Inquire
         </button>
       </form>
@@ -691,68 +739,76 @@
   </aside>
 
 
-  <!-- Voice Agent Modal -->
-  <div id="voiceModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative border border-zinc-200">
-      <button onclick="closeVoiceModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-black">
-        <i data-lucide="x" class="w-5 h-5"></i>
+  <!-- ================================================================= -->
+  <!-- VOICE MODAL — clean, no AI slop                                    -->
+  <!-- ================================================================= -->
+  <div id="voiceModal" class="hidden fixed inset-0 bg-harvey-ink/60 flex items-center justify-center p-4 z-50">
+    <div class="bg-harvey-white rounded-md max-w-sm w-full p-6 text-center shadow-2xl relative border border-harvey-rule">
+
+      <button onclick="closeVoiceModal()" class="absolute top-4 right-4 text-harvey-muted hover:text-harvey-ink transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
       </button>
 
-      <div class="w-12 h-12 rounded-xl bg-zinc-100 text-black flex items-center justify-center mx-auto mb-3">
-        <i data-lucide="mic" class="w-6 h-6"></i>
+      <div class="w-10 h-10 rounded-sm border border-harvey-rule bg-harvey-bg flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="mic" class="w-5 h-5 text-harvey-ink"></i>
       </div>
 
-      <h3 class="font-serif text-2xl font-normal text-black">Voice Input</h3>
-      <p class="text-xs text-zinc-500 mt-1">Dictate instructions or spoken legal commands.</p>
+      <h3 class="dm-serif text-xl font-light text-harvey-ink mb-1">Voice Input</h3>
+      <p class="text-[12px] text-harvey-muted mb-5">Dictate instructions or spoken legal commands.</p>
 
-      <div id="voiceTranscriptDisplay" class="my-5 p-3.5 rounded-xl bg-zinc-50 border border-zinc-200 text-xs text-zinc-800 min-h-[50px] flex items-center justify-center italic">
-        "Listening for spoken instructions... (e.g. 'Draft an NDA', 'Review this contract')"
+      <div id="voiceTranscriptDisplay"
+        class="mb-5 p-3.5 rounded-sm bg-harvey-bg border border-harvey-rule text-[12px] text-harvey-ink min-h-[50px] flex items-center justify-center italic font-mono">
+        Listening for spoken instructions...
       </div>
 
       <div class="flex flex-wrap gap-1.5 justify-center text-[11px] mb-5">
-        <button onclick="simulateVoice('Draft a Mutual NDA under Indian law')" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-2.5 py-1 rounded-md transition">"Draft a Mutual NDA"</button>
-        <button onclick="simulateVoice('Review this contract for risks')" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-2.5 py-1 rounded-md transition">"Review contract"</button>
+        <button onclick="simulateVoice('Draft a Mutual NDA under Indian law')"
+          class="bg-harvey-bg hover:bg-harvey-bgAlt text-harvey-inkMuted border border-harvey-rule px-2.5 py-1 rounded-sm transition-colors">&ldquo;Draft a Mutual NDA&rdquo;</button>
+        <button onclick="simulateVoice('Review this contract for risks')"
+          class="bg-harvey-bg hover:bg-harvey-bgAlt text-harvey-inkMuted border border-harvey-rule px-2.5 py-1 rounded-sm transition-colors">&ldquo;Review contract&rdquo;</button>
       </div>
 
-      <button onclick="processVoiceInput()" class="w-full bg-black hover:bg-zinc-800 text-white font-medium py-2.5 rounded-lg text-xs transition">
-        Stop Listening & Process
+      <button onclick="processVoiceInput()"
+        class="w-full bg-harvey-ink hover:bg-harvey-dark text-harvey-bg font-medium py-2.5 rounded-sm text-[13px] transition-colors duration-150">
+        Stop &amp; Process
       </button>
     </div>
   </div>
 
-  <!-- Consequential Safety Modal -->
-  <div id="safetyModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 text-left shadow-2xl border border-zinc-200">
-      <div class="flex items-center space-x-3 text-red-600 mb-3">
-        <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
-          <i data-lucide="shield-alert" class="w-5 h-5"></i>
+
+  <!-- ================================================================= -->
+  <!-- SAFETY MODAL                                                        -->
+  <!-- ================================================================= -->
+  <div id="safetyModal" class="hidden fixed inset-0 bg-harvey-ink/70 flex items-center justify-center p-4 z-50">
+    <div class="bg-harvey-white rounded-md max-w-sm w-full p-6 text-left shadow-2xl border border-harvey-rule">
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-9 h-9 rounded-sm bg-harvey-redBg border border-harvey-redBorder flex items-center justify-center flex-shrink-0">
+          <i data-lucide="shield-alert" class="w-4 h-4 text-harvey-red"></i>
         </div>
         <div>
-          <h3 id="safetyTitle" class="font-medium text-black text-sm">Action Confirmation</h3>
-          <span class="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.2 rounded font-semibold uppercase">Safety Guard</span>
+          <h3 id="safetyTitle" class="text-[14px] font-semibold text-harvey-ink">Action Confirmation</h3>
+          <span class="text-[9px] bg-harvey-redBg text-harvey-red border border-harvey-redBorder px-1.5 py-0.5 rounded-sm font-mono font-semibold uppercase">Safety Guard</span>
         </div>
       </div>
 
-      <p id="safetyDesc" class="text-xs text-zinc-600 leading-relaxed mb-4">
+      <p id="safetyDesc" class="text-[12px] text-harvey-inkMuted leading-relaxed mb-4">
         You are about to execute a consequential legal action. Please confirm.
       </p>
 
-      <div id="safetyDetail" class="bg-zinc-50 p-3 rounded-lg border border-zinc-200 mb-4 text-xs font-mono text-zinc-900">
+      <div id="safetyDetail" class="bg-harvey-bg p-3 rounded-sm border border-harvey-rule mb-4 text-[11px] font-mono text-harvey-ink">
         Action: Replace active draft
       </div>
 
-      <div class="flex items-center justify-end space-x-2 pt-2 border-t border-zinc-100">
-        <button onclick="closeSafetyModal()" class="px-4 py-2 rounded-lg border border-zinc-200 text-zinc-700 text-xs hover:bg-zinc-50 transition">
-          Cancel
-        </button>
-        <button onclick="confirmSafetyAction()" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-medium transition">
-          Confirm
-        </button>
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-harvey-rule">
+        <button onclick="closeSafetyModal()" class="px-4 py-2 rounded-sm border border-harvey-rule text-harvey-inkMuted text-[12px] hover:bg-harvey-bg transition-colors">Cancel</button>
+        <button onclick="confirmSafetyAction()" class="px-4 py-2 rounded-sm bg-harvey-red hover:bg-red-800 text-white text-[12px] font-medium transition-colors">Confirm</button>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript Engine -->
+
+  <!-- JS Engine -->
   <script src="/static/app.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {

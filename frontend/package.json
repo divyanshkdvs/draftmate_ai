@@ -2,7 +2,7 @@
   "name": "draftmate-ai-studio",
   "version": "2.0.0",
   "private": true,
-  "description": "DraftMate AI: Legal Drafting Studio - Kodekurrent Season 2 Hackathon",
+  "description": "DraftMate AI: Legal Drafting Studio",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

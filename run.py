@@ -16,7 +16,7 @@ sys.path.insert(0, str(BASE_DIR))
 if __name__ == "__main__":
     import uvicorn
     print("\n" + "="*70)
-    print("  ⚖️  DraftMate AI: Legal Drafting Studio (Kodekurrent Season 2)")
+    print("  ⚖️  DraftMate AI: Legal Drafting Studio")
     print("  🌐  Frontend & API running at: http://127.0.0.1:8000")
     print("  📖  Interactive Swagger Docs: http://127.0.0.1:8000/docs")
     print("="*70 + "\n")

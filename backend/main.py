@@ -1,6 +1,5 @@
 """
 DraftMate AI: Legal Drafting Studio - FastAPI Application Entry Point
-Kodekurrent Season 2 Hackathon
 """
 
 import os

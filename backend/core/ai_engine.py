@@ -53,10 +53,9 @@ class AIOrchestrator:
     """Orchestrates LLM calls across providers with fallback to offline legal synthesis."""
 
     def __init__(self):
-        self.openai_key = os.getenv("OPENAI_API_KEY")
-        self.anthropic_key = os.getenv("ANTHROPIC_API_KEY")
-        self.gemini_key = os.getenv("GEMINI_API_KEY")
-        self.groq_key = os.getenv("GROQ_API_KEY")
+        self.openai_key = os.getenv("OPENAI_API_KEY", "")
+        self.anthropic_key = os.getenv("ANTHROPIC_API_KEY", "")
+        self.gemini_key = os.getenv("GEMINI_API_KEY", "")
 
     async def generate_response(
         self,
