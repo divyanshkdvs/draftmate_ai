@@ -153,8 +153,8 @@ DraftMate was created by a team of four at RGIPT for the Kodekurrent Season 2 Ha
 | Name | Program | GitHub |
 |---|---|---|
 | Divyansh Kumar | B.Tech, Mathematics and Computing, RGIPT | [@divyanshkdvs](https://github.com/divyanshkdvs) |
-| Yuvraj Singh Rathor | B.Tech, Information Technology, RGIPT | - | [@Yuvrajsinghrathor](https://github.com/Yuvrajsinghrathor) |
-| Shubrat Singh | B.Tech, Information Technology, RGIPT | [@faqlodeongames-glitch](https://github.c[o](https://github.com/Yuvrajsinghrathor) |
+| Yuvraj Singh Rathore | B.Tech, Information Technology, RGIPT | [@Yuvrajsinghrathor](https://github.com/Yuvrajsinghrathor) |
+| Shubrat Singh | B.Tech, Information Technology, RGIPT | [@faqlodeongames-glitch](https://github.com/faqlodeongames-glitch) |
 | Shrey Kushwaha | B.Tech, Information Technology, RGIPT | [@Shrey-K017](https://github.com/Shrey-K017) |
 
 ## Disclaimer
