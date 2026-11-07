@@ -137,7 +137,7 @@ draftmate_ai/
 
 ## How it was built
 
-The product design, feature selection and research into existing legal-tech tools were done by me. The code was developed with an AI coding assistant (Google Antigravity) under my direction, and I reviewed and tested the result. The interface takes design inspiration from modern legal-tech products.
+This version was led by Divyansh Kumar, who handled product design, feature selection and research into existing legal-tech tools. The code was developed with an AI coding assistant (Google Antigravity) under his direction, and he reviewed and tested the result. The interface takes design inspiration from modern legal-tech products.
 
 ## Acknowledgements
 
@@ -146,10 +146,16 @@ The product design, feature selection and research into existing legal-tech tool
 - [Claude for Legal](https://github.com/anthropics/claude-for-legal) and [Awesome Legal Skills](https://github.com/lawve-ai/awesome-legal-skills): references for structuring legal workflows
 - [OpenWhispr](https://github.com/OpenWhispr/openwhispr): reference for voice interaction
 
-## Author
+## Team
 
-**Divyansh Kumar**: B.Tech, Mathematics and Computing, RGIPT
-GitHub: [@divyanshkdvs](https://github.com/divyanshkdvs)
+DraftMate was created by a team of four at RGIPT for the Kodekurrent Season 2 Hackathon. Each member built a prototype, and this version was selected as the team's final submission.
+
+| Name | Program | GitHub |
+|---|---|---|
+| Divyansh Kumar | B.Tech, Mathematics and Computing, RGIPT | [@divyanshkdvs](https://github.com/divyanshkdvs) |
+| Yuvraj Singh Rathor | B.Tech, Information Technology, RGIPT | - | [@Yuvrajsinghrathor](https://github.com/Yuvrajsinghrathor) |
+| Shubrat Singh | B.Tech, Information Technology, RGIPT | [@faqlodeongames-glitch](https://github.c[o](https://github.com/Yuvrajsinghrathor) |
+| Shrey Kushwaha | B.Tech, Information Technology, RGIPT | [@Shrey-K017](https://github.com/Shrey-K017) |
 
 ## Disclaimer
 
